@@ -2,7 +2,7 @@
   Copyright 2011 - Inform8. 
   http://www.inform8.com
 -->
-<project name="Inform8" default="buildDistribution" basedir=".">
+<project name="Inform8" default="buildDistributions" basedir=".">
 
   <property file="build.properties" />
   <property file="default.properties" />
@@ -10,108 +10,11 @@
   <path id="compile.classpath">
     <fileset dir="${lib.folder}" />
   </path>
-
-  <target name="init">
-    <delete dir="${build.out.folder}" />
-    <mkdir dir="${build.out.folder}" />
-    <delete dir="${dist.folder}" />
-    <mkdir dir="${dist.folder}" />
 	
-	<mkdir dir="${dist.folder}/basic/php" />
-	<mkdir dir="${dist.folder}/basic/php/lib" />
-    <mkdir dir="${dist.folder}/basic/php/bin" />
-    <mkdir dir="${dist.folder}/basic/php/${dist.content.templates.folder}" />
-    <mkdir dir="${dist.folder}/basic/php/${dist.content.content.folder}" />
-    <mkdir dir="${dist.folder}/basic/php/${dist.content.config.folder}" />	
-
-	<mkdir dir="${dist.folder}/basic/java" />
-	<mkdir dir="${dist.folder}/basic/java/lib" />
-    <mkdir dir="${dist.folder}/basic/java/bin" />
-	
-	<mkdir dir="${dist.folder}/plus" />
-	<mkdir dir="${dist.folder}/plus/lib" />
-    <mkdir dir="${dist.folder}/plus/bin" />
-    <mkdir dir="${dist.folder}/plus/${dist.content.templates.folder}" />
-    <mkdir dir="${dist.folder}/plus/${dist.content.content.folder}" />
-    <mkdir dir="${dist.folder}/plus/${dist.content.config.folder}" />
-
-	<mkdir dir="${dist.folder}/pro" />
-    <mkdir dir="${dist.folder}/pro/lib" />
-    <mkdir dir="${dist.folder}/pro/bin" />
-	
-    <mkdir dir="${dist.folder}/${dist.content.templates.folder}" />
-    <mkdir dir="${dist.folder}/${dist.content.content.folder}" />
-    <mkdir dir="${dist.folder}/${dist.content.config.folder}" />
-  </target>
-
-  <target name="compile" depends="init">
-    <javac debug="true" srcdir="src" destdir="${build.out.folder}" classpathref="compile.classpath" source="1.6">
-    </javac>
-  </target>
-
-  <target name="buildDistribution" depends="packageDefaultContent,jar">
-  </target>
-
-  <target name="jar" depends="compile">
-    <copy todir="${build.out.folder}">
-      <fileset dir="src">
-        <include name="**/*.properties" />
-      </fileset>
-    </copy>
-    <jar destfile="${dist.folder}/bin/${jar.file.name}" basedir="${build.out.folder}">
-      <manifest>
-        <attribute name="Copyright" value="Copyright 2011 - Inform8." />
-        <attribute name="Website" value="http://www.inform8.com" />
-        <attribute name="Version" value="${common.build.major}.${common.build.minor}.beta" />
-      </manifest>
-    </jar>
-  </target>
-
-  <target name="packageDefaultContent" depends="compile">
-    <copy todir="${dist.folder}/${dist.content.templates.folder}">
-      <fileset dir="${default.project.folder}/templates">
-        <include name="**/*.vm" />
-        <include name="**/*.lvm" />
-      </fileset>
-    </copy>
-    <copy todir="${dist.folder}/${dist.content.content.folder}">
-      <fileset dir="${default.project.folder}/content">
-        <include name="**/*.*" />
-        <exclude name="**/*.svn" />
-      </fileset>
-    </copy>
-    <copy todir="${dist.folder}/config">
-      <fileset dir="build/includes">
-        <include name="gen.properties" />
-        <include name="lang/**" />
-        <include name="in.sql" />
-        <include name="data.sql" />
-      </fileset>
-    </copy>
-    <zip destfile="${dist.folder}/${dist.content.zip}">
-      <fileset dir="${dist.folder}">
-        <include name="**/*.*" />
-      </fileset>
-    </zip>
-    <delete dir="${dist.folder}/${dist.content.content.folder}">
-    </delete>
-    <delete dir="${dist.folder}/${dist.content.templates.folder}">
-    </delete>
-    <delete dir="${dist.folder}/config">
-    </delete>
-
-    <copy todir="${dist.folder}/lib">
-      <fileset dir="lib">
-        <include name="*.*" />
-      </fileset>
-    </copy>
-
-    <copy todir="${dist.folder}">
-      <fileset dir="build/includes">
-        <include name="build.properties" />
-        <include name="build.xml" />
-      </fileset>
-    </copy>
+  <target name="buildDistributions">
+  	<ant dir="essentials" antfile="build.xml" target="build" />
+  	<ant dir="web" antfile="build.xml" target="build" />
+    <ant dir="plus" antfile="build.xml" target="build" />
   </target>
 
 </project>
