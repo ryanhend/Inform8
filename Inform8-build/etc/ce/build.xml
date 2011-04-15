@@ -1,0 +1,87 @@
+<!--
+  Copyright 2011 - 88 Creative Pty Ltd. 
+  Copyright of this program is the property of 88 Creative, 
+  without whose written permission reproduction in
+  whole or in part is prohibited. All rights reserved.
+  http://www.inform8.com
+  http://www.88creative.com.au
+-->
+<project name="Inform8-CE-Package" default="build" basedir=".">
+
+  <property file="../build.properties" />
+  <property file="../default.properties" />
+
+  <target name="init">
+    <delete dir="../${dist.folder}/ce/" />
+    <mkdir dir="../${dist.folder}/ce/" />
+    
+    <mkdir dir="../${dist.folder}/ce/php" />
+    <mkdir dir="../${dist.folder}/ce/java" />
+  </target>  
+  
+  <target name="buildDependencies">
+    <ant dir="../../Inform8-common/" antfile="build.xml" target="build" />
+    <ant dir="../../Inform8-ce/" antfile="build.xml" target="build" />    
+  </target>
+  
+  
+  <target name="build" depends="init,buildDependencies, packagePhpCommunityEdition">
+  </target>
+
+  
+  <target name="packagePhpCommunityEdition">
+    <copy todir="../${dist.folder}/ce/php/bin">
+      <fileset dir="../../Inform8-common/output/dist/bin/">
+        <include name="*.jar" />
+      </fileset>
+    </copy>
+    
+    <copy todir="../${dist.folder}/ce/php/lib">
+      <fileset dir="../../Inform8-common/output/dist/lib/">
+        <include name="*.*" />
+      </fileset>
+    </copy>
+    
+    <copy todir="../${dist.folder}/ce/php/php">
+      <fileset dir="../../Inform8-common/output/dist/php/">
+        <include name="**/*" />
+      </fileset>
+    </copy>
+    
+    <copy todir="../${dist.folder}/ce/php/">
+      <fileset dir="../../Inform8-ce/output/dist/php/">
+        <include name="**/*" />
+      </fileset>
+    </copy>
+    
+ <!--   <zip destfile="../${dist.folder}/ce/php/package.zip">
+      <fileset dir="../${dist.folder}/ce/php/">
+        <include name="bin/*" />
+        <include name="php/**/*" />
+        <include name="config/*.*" />
+        <include name="lib/*.*" />
+        <include name="templates/*.*" />
+        <include name="build.xml" />
+        <include name="build.properties" />
+      </fileset>
+    </zip>
+    <delete dir="../${dist.folder}/ce/php/" includes="*,**,**/*" 
+       includeemptydirs="true"
+      excludes="setup.xml setup-readme.html package.zip">
+    </delete>    
+ -->
+    
+    <zip destfile="../${dist.folder}/ce/php/Inform8.CE.beta.${ce.build.major}.${ce.build.minor}.zip">
+      <fileset dir="../${dist.folder}/ce/php/">
+        <include name="**/*.*" />
+      </fileset>
+    </zip>
+    
+    <delete dir="../${dist.folder}/ce/php/" includes="*,**,**/*" 
+       includeemptydirs="true"
+      excludes="Inform8.CE.beta.${ce.build.major}.${ce.build.minor}.zip">
+    </delete>
+    
+  </target>
+  
+</project>

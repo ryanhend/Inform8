@@ -1,0 +1,76 @@
+<!--
+  Copyright 2011 - Inform8. 
+  http://www.inform8.com
+-->
+<project name="Inform8-Essentials-Package" default="build" basedir=".">
+
+  <property file="../build.properties" />
+  <property file="../default.properties" />
+
+  <target name="init">
+    <delete dir="../${dist.folder}/essentials/" />
+    <mkdir dir="../${dist.folder}/essentials/" />
+    
+    <mkdir dir="../${dist.folder}/essentials/php" />
+    <mkdir dir="../${dist.folder}/essentials/java" />
+  </target>  
+  
+  <target name="buildDependencies">
+    <ant dir="../../Inform8-common/" antfile="build.xml" target="build" />
+    <ant dir="../../Inform8-basic/" antfile="build.xml" target="build" />    
+  </target>
+  
+  
+  <target name="build" depends="init,buildDependencies,packagePhpBasicEdition">
+  </target>
+
+  
+  <target name="packagePhpBasicEdition">
+    <copy todir="../${dist.folder}/essentials/php/bin">
+      <fileset dir="../../Inform8-common/output/dist/bin/">
+        <include name="*.jar" />
+      </fileset>
+    </copy>
+    
+    <copy todir="../${dist.folder}/essentials/php/lib">
+      <fileset dir="../../Inform8-common/output/dist/lib/">
+        <include name="*.*" />
+      </fileset>
+    </copy>
+
+    <!-- common php source -->
+    <copy todir="../${dist.folder}/essentials/php/php">
+      <fileset dir="../../Inform8-common/output/dist/php/">
+        <include name="**/*" />
+      </fileset>
+    </copy>    
+
+    <copy todir="../${dist.folder}/essentials/php/">
+      <fileset dir="../../Inform8-common/output/dist/">
+        <include name="LICENSE.txt" />
+      </fileset>
+    </copy>    
+
+    
+    <!-- Basic project files for distribution -->
+    <copy todir="../${dist.folder}/essentials/php/">
+      <fileset dir="../../Inform8-basic/output/dist/php/">
+        <include name="**/*" />
+      </fileset>
+    </copy>   
+    
+    <zip destfile="../${dist.folder}/essentials/php/Inform8.essentials.php.beta.${essentials.build.major}.${essentials.build.minor}.zip">
+      <fileset dir="../${dist.folder}/essentials/php/">
+        <include name="**/*.*" />
+        <include name="templates/Custom" />
+      </fileset>
+    </zip>
+    
+    <delete dir="../${dist.folder}/essentials/php/" includes="*,**,**/*" 
+       includeemptydirs="true"
+      excludes="Inform8.essentials.php.beta.${essentials.build.major}.${essentials.build.minor}.zip">
+    </delete>
+    
+  </target>
+  
+</project>
