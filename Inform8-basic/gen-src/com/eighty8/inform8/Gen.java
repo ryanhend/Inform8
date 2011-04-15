@@ -9,7 +9,6 @@ package com.eighty8.inform8;
 
 import java.io.File;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 

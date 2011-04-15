@@ -8,17 +8,10 @@
 package com.eighty8.inform8;
 
 import java.io.File;
-import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
 import com.eighty8.inform8.config.PlusGeneratorConfig;
@@ -33,10 +26,7 @@ import com.eighty8.inform8.db.mysql.MysqlConnection;
 import com.eighty8.inform8.db.mysql.MysqlModelBuilder;
 import com.eighty8.inform8.db.table.Inform8Table;
 import com.eighty8.inform8.displaysettings.Label;
-import com.eighty8.inform8.file.FileManager;
-import com.eighty8.inform8.lang.LanguageGenerator;
 import com.eighty8.inform8.menu.Menu;
-import com.eighty8.inform8.util.FileUtils;
 import com.eighty8.inform8.velocity.DummyLogger;
 
 /**
@@ -171,34 +161,6 @@ public class Inform8 {
     LOG.debug("General Generation Starting");
     new Gen(generatorConfig).gen(tables, extras);
     LOG.debug("General Generation Complete");    
-    
-    
-  }
-
-  /**
-   * 
-   * @param tables
-   * @param template
-   * @return
-   * @throws Exception
-   */
-  private String merge(List<Inform8Table> tables, String template, HashMap<String, Object> extras) throws Exception {
-    LOG.trace("Merging model with template " + template);
-    
-    HashMap<String, Object> data = new HashMap<String, Object>();
-    data.put("tables", tables); // all tables
-    data.put("ds", "$");
-    data.put("config", generatorConfig);
-    data.put("siteMenu", siteMenu);
-    data.putAll(extras);
-
-    VelocityContext vc = new VelocityContext(data);
-    StringWriter stringWriter = new StringWriter();
-
-    Template templ = velocityEngine.getTemplate(template);
-    templ.merge(vc, stringWriter);
-
-    return stringWriter.toString();
   }
   
 
