@@ -1,0 +1,13 @@
+  /**
+   * Loads the columns from the http request just as the columns name.
+   * Loads from GET or POST. Tries POST variables first.
+   */
+  public function loadFromHttpRequest() {
+    #foreach( $col in $table.columns )
+      #if($col.displaySettings.hasLabel('pwd'))
+        $this->set${col.name}(md5(getOrPost('$col.name')));
+      #else
+        $this->set${col.name}(getSafeGetOrPost('$col.name'));
+      #end
+    #end
+  }

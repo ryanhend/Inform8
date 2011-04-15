@@ -1,0 +1,94 @@
+<!--
+  Copyright 2011 - Inform8. 
+  http://www.inform8.com
+-->
+<project name="Inform8-Essentials" default="build" basedir=".">
+
+  <property file="../Inform8-build/build.properties" />
+  <property file="../Inform8-build/default.properties" />
+
+  <path id="compile.classpath">
+    <fileset dir="${lib.folder}" />
+    <fileset dir="../Inform8-common/${lib.folder}" />
+    <fileset dir="../Inform8-common/output/dist/bin/" />
+  </path>
+
+  <target name="build" depends="jar,package">
+  </target>
+  
+  <target name="init">
+    <delete dir="${build.out.folder}" />
+    <mkdir dir="${build.out.folder}" />
+    <delete dir="${dist.folder}" />
+    <mkdir dir="${dist.folder}" />
+	
+    <mkdir dir="${dist.folder}/php" />
+    <mkdir dir="${dist.folder}/php/lib" />
+    <mkdir dir="${dist.folder}/php/bin" />
+    <mkdir dir="${dist.folder}/php/${dist.content.templates.folder}" />
+    <mkdir dir="${dist.folder}/php/${dist.content.config.folder}" />    	
+	
+	<mkdir dir="${dist.folder}/java" />
+	<mkdir dir="${dist.folder}/java/lib" />
+    <mkdir dir="${dist.folder}/java/bin" />
+    <mkdir dir="${dist.folder}/java/${dist.content.templates.folder}" />
+    <mkdir dir="${dist.folder}/java/${dist.content.config.folder}" />        
+  </target>
+
+  <target name="compile" depends="init">
+    <javac debug="true" srcdir="gen-src" destdir="${build.out.folder}" classpathref="compile.classpath" source="1.6">
+    </javac>
+  </target>
+
+  <target name="jar" depends="compile">
+    <copy todir="${build.out.folder}">
+      <fileset dir="gen-src">
+        <include name="**/*.properties" />
+      </fileset>
+    </copy>
+    <jar destfile="${dist.folder}/php/bin/${essentials.php.jar.file.name}" basedir="${build.out.folder}">
+      <manifest>
+        <attribute name="Copyright" value="Copyright 2011 - Inform8." />
+        <attribute name="Website" value="http://www.inform8.com" />
+        <attribute name="Version" value="Inform8.essentials.php.beta.${essentials.build.major}.${essentials.build.minor}" />
+		<attribute name="CodeOutput" value="PHP" />
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="package" depends="compile">
+    
+    <copy todir="${dist.folder}/php/${dist.content.templates.folder}/Inform8">
+      <fileset dir="templates/php/">
+        <include name="**/*.vm" />
+      </fileset>
+    </copy>
+    
+    <mkdir dir="${dist.folder}/php/${dist.content.templates.folder}/Custom" />
+    
+    <copy todir="${dist.folder}/php/config">
+      <fileset dir="config/">
+        <include name="gen.properties" />
+        <include name="in.mysql.sql" />
+      </fileset>
+    </copy>
+   
+    <!-- Copy php source code over -->
+    <copy todir="${dist.folder}/php/php">
+      <fileset dir="php-src">
+        <include name="**/*" />
+      </fileset>
+    </copy>
+    
+    <!-- Copy build scripts. -->
+    <copy todir="${dist.folder}/php">
+      <fileset dir="build/">
+        <include name="build.properties" />
+        <include name="build.xml" />
+        <include name="setup.xml" />
+      </fileset>
+    </copy>	
+	
+  </target>
+
+</project>

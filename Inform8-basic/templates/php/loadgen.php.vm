@@ -1,0 +1,28 @@
+#* 
+ * Copyright 2011 - Inform8
+ * http://www.inform8.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * http://www.apache.org/licenses/LICENSE-2.0
+*#<?php
+/**
+ * Utility class to load all Inform8 library code.
+ *
+ * Generated source code using Inform8.
+ */
+require_once 'Inform8Context.php';
+require_once 'Inform8Exception.php';
+require_once 'dao/Inform8Dao.php';
+require_once 'log/Inform8Logger.php';
+require_once 'iql/load.php';
+#foreach( $table in $tables )
+    require_once 'dao/${table.name}Dao.php';
+    
+    require_once 'do/${table.name}DataClass.php';
+    require_once 'bo/${table.name}Class.php';
+    
+    require_once 'json/${table.name}JsonBuilder.php';
+    require_once 'xml/${table.name}XmlBuilder.php';
+    require_once 'iql/${table.name}IQL.php';
+#end
+?>
