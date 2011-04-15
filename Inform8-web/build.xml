@@ -1,0 +1,44 @@
+<!--
+   * Copyright 2011 - Inform8
+   * http://www.inform8.com
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License")
+   * http://www.apache.org/licenses/LICENSE-2.0
+-->
+<project name="Inform8-web" default="build" basedir=".">
+
+  <property file="../Inform8-build/build.properties" />
+  <property file="../Inform8-build/default.properties" />
+
+  <path id="compile.classpath">
+    <fileset dir="${lib.folder}" />
+  </path>
+
+  <target name="init">
+    <delete dir="${dist.folder}" />
+    <mkdir dir="${dist.folder}" />
+	<mkdir dir="${dist.folder}/site" />
+    <mkdir dir="${dist.folder}/setup" />
+    <mkdir dir="${dist.folder}/Inform8" />
+  </target>
+
+  <target name="build" depends="init">
+    <copy todir="${dist.folder}/site/">
+      <fileset dir="src"></fileset>
+    </copy>
+    <copy todir="${dist.folder}/setup/sql"> 
+      <fileset dir="sql"></fileset>
+    </copy>
+    <copy todir="${dist.folder}/Inform8/templates/Inform8">
+      <fileset dir="templates"></fileset>
+    </copy>
+    <copy todir="${dist.folder}/">
+      <fileset dir="build"></fileset>
+    </copy>
+    <copy todir="${dist.folder}/Inform8/config">
+      <fileset dir="config"></fileset>
+    </copy>
+    
+  </target> 
+
+</project>
