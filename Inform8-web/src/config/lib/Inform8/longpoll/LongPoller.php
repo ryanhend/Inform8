@@ -27,11 +27,10 @@ abstract class LongPoller {
 
 
   public function run() {
-    $sleepTime = 1; //Seconds
     $data = NULL;
     $timeout = 0;
 
-    set_time_limit($this->timeoutTime * 1.5);
+    set_time_limit($this->timeoutTime + $this->sleepTime + 15);
 
     //Query database for data
     while($data == NULL && $timeout < $this->timeoutTime) {
