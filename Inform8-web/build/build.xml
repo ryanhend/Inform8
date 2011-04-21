@@ -24,5 +24,15 @@
         <sshexec host="${prodServer}" username="${prodServerUserName}" password="${pwd}" trust="true" command="unzip -o ${prodUnzipFolder}site.zip -d ${prodUnzipFolder}"/>
         <sshexec host="${prodServer}" username="${prodServerUserName}" password="${pwd}" trust="true" command="rm ${prodUnzipFolder}site.zip" />
     </target>
+
+    <target name="gen">
+    	<ant dir="Inform8" />
+    </target>
+    
+    <target name="lgd" depends="localGenAndDeploy">
+    </target>
+    
+    <target name="localGenAndDeploy" depends="gen">
+    </target>	
 	
 </project>
