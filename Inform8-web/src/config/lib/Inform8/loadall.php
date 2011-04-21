@@ -28,6 +28,8 @@
     
     require_once 'language/LanguageStore.php';
     
+    require_once 'longpoll/LongPoller.php';
+    
     require_once 'logging/BasicLoggerClass.php';
     
     require_once 'mail/class.phpmailer.php';
@@ -38,8 +40,17 @@
     Inform8Context::getClassRegistry()->registerClass('SimpleMailer', 'config/lib/Inform8/mail/SimpleMailerClass.php');
     Inform8Context::getClassRegistry()->registerClass('FromName', 'config/lib/Inform8/mail/TemplateMailer.php');
     Inform8Context::getClassRegistry()->registerClass('TemplateMailer', 'config/lib/Inform8/mail/TemplateMailer.php');
+    Inform8Context::getClassRegistry()->registerClass('DbTemplate', 'config/lib/Inform8/mail/templates/DbTemplateMailer.php');
+    Inform8Context::getClassRegistry()->registerClass('EmailTemplate', 'config/lib/Inform8/mail/templates/Template.php');
+    Inform8Context::getClassRegistry()->registerClass('FileTemplate', 'config/lib/Inform8/mail/templates/Template.php');
     
     require_once 'recaptcha/recaptchalib.php';
+    
+    Inform8Context::getClassRegistry()->registerClass('Level', 'config/lib/Inform8/security/Level.php');
+    Inform8Context::getClassRegistry()->registerClass('DbAccessControl', 'config/lib/Inform8/security/DbAccessControl.php');
+    Inform8Context::getClassRegistry()->registerClass('TableAccess', 'config/lib/Inform8/security/TableAccess.php');
+    Inform8Context::getClassRegistry()->registerClass('PageAccess', 'config/lib/Inform8/security/PageAccess.php');
+    
     require_once 'session/SessionClass.php';
     
     Inform8Context::getClassRegistry()->registerClass('SimpleTemplate', 'config/lib/Inform8/template/SimpleTemplate.php');

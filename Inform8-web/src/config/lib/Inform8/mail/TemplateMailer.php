@@ -39,9 +39,9 @@ class TemplateMailer {
   private $mapObjects = array(); // accessory Objects, variables etc
 
   /**
-   * @var int the template primary key value for lookup.
+   * @var Template the template loader.
    */
-  private $templateId;
+  private $template;
 
   /**
    * Settings for sending the email
@@ -72,19 +72,12 @@ class TemplateMailer {
     $this->to[] = $to;
   }
 
-  function setTemplateId($id) {
-    $this->templateId = $id;
+  function setTemplate(EmailTemplate $template) {
+    $this->template = $template;
   }
 
   function send() {
-    $templateRes = $this->parseDbTemplate($this->templateId);
-
-    $templates = IQL::select(EmailTemplateIQL::$_TABLE)->where(null, EmailTemplateIQL::$TEMPLATEID, '=', $this->templateId)->get();
-    $template = $templates[0];
-
-    // get template files to add to the email
-    $templateFiles = IQL::select(TemplateFileIQL::$_TABLE)
-    ->where(null, TemplateFileIQL::$TEMPLATEID, '=', $template->getPk())->get();
+    $templateRes = $this->parseTemplate();
 
     $storageSettingsDao = new JackStorageDao();
     $allSettings = $storageSettingsDao->getAll();
@@ -119,9 +112,17 @@ class TemplateMailer {
         $mail->IsMail();
       }
       
+      $templateFiles = $this->template->getEmbeddableFiles();
       if (isset($templateFiles) && is_array($templateFiles)) {
         foreach ($templateFiles as $afile) {
           $mail->AddEmbeddedImage(StaticConfig::getStorageLocation() . '/' .  $afile->getFileName(), $afile->getName());
+        }
+      }
+      
+      $attachFiles = $this->template->getAttachmentFiles();
+      if (isset($attachFiles) && is_array($attachFiles)) {
+        foreach ($attachFiles as $afile) {
+          $mail->AddAttachment(StaticConfig::getStorageLocation() . '/' .  $afile->getFileName(), $afile->getName());
         }
       }
 
@@ -135,31 +136,15 @@ class TemplateMailer {
   }
 
 
-  private function parseDbTemplate($id) {
-    // check template exists
-    $templates = IQL::select(EmailTemplateIQL::$_TABLE)
-    ->where(null, EmailTemplateIQL::$TEMPLATEID, '=', $id)
-    ->get();
-    $template = $templates[0];
-
+  private function parseTemplate() {
     $v = array();
     $v = array_merge($v, $this->mapObjects);
 
-    // load generic variables
-    $genericVars = IQL::select(VariableIQL::$_TABLE)->where(null, VariableIQL::$ENABLED, '=', 1)->get();
-    if (is_array($genericVars)) {
-      foreach ($genericVars as $gv) {
-        $v[$gv->getName()] = $gv->getValue();
-      }
-    }
-
-    // load template specific variables - may overwrite generic.
-    $templateVars = IQL::select(VariableIQL::$_TABLE)->where(null, VariableIQL::$ENABLED, '=', 1)->_and(null, VariableIQL::$TEMPLATEID, '=', $template->getPk());
-    foreach ($templateVars as $tv) {
+    $tempVars = $this->template->getVariables();
+    foreach ($tempVars as $tv) {
       $v[$tv->getName()] = $tv->getValue();
     }
 
-    $v['siteConfig'] = $this->getSiteConfig();
     $v['emailSettings'] = $this->getSettings();
 
     ob_start();
@@ -186,11 +171,6 @@ class TemplateMailer {
     return array('text'=>$textContents, 'html'=>$htmlContents, 'subject'=>$subjectContents);
   }
   
-  function loadVariables() {
-    
-  }
-  
-  
 
   /**
    * @return MailSettings the settings
@@ -207,12 +187,5 @@ class TemplateMailer {
     $this->settings = $settings;
   }
   
-  private function getSiteConfig() {
-    $dao = new SiteConfigurationDao();
-    $configs = $dao->getAll();
-    $config = $configs[0];
-    return $config;
-  }
-
 }
 ?>

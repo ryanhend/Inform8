@@ -76,6 +76,18 @@ class StaticConfig {
   function isLoginEmailFormat() {
     return false;
   }
+  
+  
+  /**
+   * Returns the name of the defaut template.
+   * The user can also be used to control the defaut template.
+   * 
+   * @param Object user The current user or NULL if no user is logged in
+   */
+  function getDefaultTemplate($user = NULL) {
+    return 'default.php';      
+  }
+  
 
   /**
    *
@@ -100,20 +112,11 @@ class StaticConfig {
   }
 
 
-  public static function getEmailSmtpServer() {
-    return '';
-  }
-
-  public static function getEmailSmtpUsername() {
-    return '';
-  }
-
-  public static function getEmailSmtpPassword() {
-    return '';
-  }
-
-  public static function getEmailSmtpPort() {
-    return '25';
+  /**
+   * return MailSettings the mailer settings.
+   */
+  public static function getEmailSettings() {
+    return new StaticMailSettings();
   }
 
 }

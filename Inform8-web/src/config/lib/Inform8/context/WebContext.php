@@ -15,7 +15,8 @@
 class WebContext extends Inform8Context{
 
   private static $CONTROLLERS = array();
-
+  private static $PAGE_ACCESS = array();
+  
   private static $LANG;
 
   public static function addController($page, $controllerClassName){
@@ -38,8 +39,22 @@ class WebContext extends Inform8Context{
       self::$LANG = new LanguageStore($langArray);
     }
     return self::$LANG;
-  }  
+  }
 
+  
+  public static function getPageAccess($page){
+    if(self::$PAGE_ACCESS[$page] != NULL) {
+      return self::$PAGE_ACCESS[$page];
+    }else {
+      return NULL;
+    }
+  }  
+  
+  
+  public static function addPageAccess(PageAccess $access){
+    self::$PAGE_ACCESS[$access->getName()] = $access;
+  }   
+  
 }
 
 ?>

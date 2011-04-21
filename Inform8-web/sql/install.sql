@@ -31,6 +31,16 @@ CREATE TABLE `TemplateFile` (
 ) ENGINE=InnoDB CHARSET=utf8;
 ALTER TABLE `TemplateFile` ADD CONSTRAINT FOREIGN KEY (`TemplateId`) REFERENCES `EmailTemplate` (`TemplateId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
+CREATE TABLE `TemplateFileAttachment` (
+  `TemplateFileAttachmentId` smallint unsigned NOT NULL auto_increment,
+  `Enabled` tinyint(1) default NULL,
+  `Name` varchar(255) NOT NULL,
+  `Filename` varchar(255),
+  `TemplateId` smallint unsigned NOT NULL,
+  PRIMARY KEY  (`TemplateFileAttachmentId`)
+) ENGINE=InnoDB CHARSET=utf8;
+ALTER TABLE `TemplateFileAttachment` ADD CONSTRAINT FOREIGN KEY (`TemplateId`) REFERENCES `EmailTemplate` (`TemplateId`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 CREATE TABLE `Variable` (
   `VariableId` smallint unsigned NOT NULL auto_increment,
   `Enabled` tinyint(1) default NULL,
@@ -50,6 +60,7 @@ CREATE TABLE  `User` (
   `Enabled` tinyint(1) NOT NULL,
   `Firstname` varchar(255),
   `Lastname` varchar(255),
+  `UserLevel` enum('User','Admin') default 'User',
   `Email` varchar(255),	
   `Username` varchar(32) UNIQUE,
   `Password` varchar(255) NOT NULL,
@@ -60,6 +71,8 @@ CREATE TABLE  `User` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8; 
 
 --  ====================================== 
---  user - password test
+--  Default User 
+--   - username test
+--   - password test
 --  ======================================
-INSERT into `User`(Enabled, Firstname, Lastname, Username, Password) values(1, 'Ryan', 'Henderson', 'test', '098f6bcd4621d373cade4e832627b4f6');
+INSERT into `User`(Enabled, Firstname, Lastname, UserLevel, Username, Password) values(1, 'Ryan', 'Henderson', 'Admin', 'test', '098f6bcd4621d373cade4e832627b4f6');

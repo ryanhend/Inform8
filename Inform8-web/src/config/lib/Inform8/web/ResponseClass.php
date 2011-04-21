@@ -36,11 +36,11 @@ class Response {
   }
 
 
-  public function getPageTemplate() {
+  public function getPageTemplate($user) {
     if ($this->template != NULL) {
       return $this->template;
     }
-    return 'default.php';
+    return StaticConfig::getDefaultTemplate($user);
   }
 
   public function setPageTemplate($template) {
