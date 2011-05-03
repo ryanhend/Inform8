@@ -38,7 +38,9 @@
   require_once 'session.php';
 
   // check authentication
-  require_once 'auth.php';
+  if( !(isset($noAuth) && $noAuth == 1) ) {
+    require_once 'auth.php';
+  }
   
   // last chance to config anything else.
   include 'setup.php';
