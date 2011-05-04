@@ -7,6 +7,7 @@ RewriteRule error.php$ error.php [L]
 
 RewriteRule ajax.php$ ajax.php [L]
 
+RewriteRule authenticate.php$ authenticate.php [L]
 RewriteRule logout$ index.php?logout=true [NC]
 
 RewriteRule stream.php$ stream.php [L]
