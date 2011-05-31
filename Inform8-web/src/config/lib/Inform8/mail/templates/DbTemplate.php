@@ -34,16 +34,16 @@ class DbTemplate implements EmailTemplate{
   }
 
 
-  public getSubjectTemplate() {
-    $this->template->getSubjectTemplate();
+  public function getSubjectTemplate() {
+    return $this->template->getSubjectTemplate();
   }
 
-  public getTextTemplate() {
-    $this->template->getTextTemplate();
+  public function getTextTemplate() {
+    return $this->template->getTextTemplate();
   }
 
-  public getHtmlTemplate() {
-    $this->template->getHtmlTemplate();
+  public function getHtmlTemplate() {
+    return $this->template->getHtmlTemplate();
   }
 
 

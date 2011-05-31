@@ -17,5 +17,16 @@ class WebDate {
     return strtotime($date);
   }
 
+  public static function newMysqlDateTime($theTime = NULL) {
+    if ($theTime == NULL) {
+      $theTime = time();
+    }
+    return date("Y-m-d H:i:s", $theTime);
+  }
+
+  public static function newMysqlToday() {
+    return date("Y-m-d 00:00:00", time());
+  }   
+  
 }
 ?>

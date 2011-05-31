@@ -11,7 +11,9 @@
   
   if (Request::getSafeGetOrPost("logout") == 'true') {
     $authManager->reset();
-  }
+    header("Location: /");
+    die();
+  } 
 	
   if (!$authManager->isAuthenticated()) {
   	//attempt login if set

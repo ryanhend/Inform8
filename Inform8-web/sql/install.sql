@@ -70,6 +70,18 @@ CREATE TABLE  `User` (
   PRIMARY KEY  (`UserId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8; 
 
+
+CREATE TABLE  `UserLoginHistory` (
+  `UserLoginHistoryId` bigint unsigned NOT NULL auto_increment,
+  `UserId` mediumint unsigned NOT NULL,
+  `CreationTime` TIMESTAMP,
+  `IP` varchar(50),
+  `Latitude` FLOAT( 10, 6 ) NOT NULL,
+  `Longitude` FLOAT( 10, 6 ) NOT NULL,
+  PRIMARY KEY  (`UserLoginHistoryId`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `UserLoginHistory` ADD CONSTRAINT FOREIGN KEY (`UserId`) REFERENCES `User` (`UserId`) ON DELETE CASCADE ON UPDATE CASCADE; 
+
 --  ====================================== 
 --  Default User 
 --   - username test

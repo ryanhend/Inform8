@@ -197,15 +197,23 @@ public class MysqlModelBuilder implements ModelBuilder {
 
     for (Inform8Table table : tables) {
       ResultSet exportedFks = metaData.getExportedKeys(GenerationContext.getInstance().getDatabaseName(), null, table.getName());
-
+      LOG.debug("Extracting Foreign Keys for table " + table.getName());
       if (exportedFks.first()) {
         do {
           MasterChildForeignKey fk = new MasterChildForeignKey(model.getTable(exportedFks.getString("PKTABLE_NAME")), exportedFks.getString("PKCOLUMN_NAME"),
               model.getTable(exportedFks.getString("FKTABLE_NAME")), exportedFks.getString("FKCOLUMN_NAME"));
-
+          
+          LOG.debug("FK " +
+        		  " PKTABLE_NAME:" + exportedFks.getString("PKTABLE_NAME") +
+        		  " PKCOLUMN_NAME:" + exportedFks.getString("PKCOLUMN_NAME") +
+        		  " FKTABLE_NAME:" + exportedFks.getString("FKTABLE_NAME") +
+        		  " FKCOLUMN_NAME:" + exportedFks.getString("FKCOLUMN_NAME"));
+          
           model.getTable(exportedFks.getString("PKTABLE_NAME")).getPrimaryKey().addMasterForeignKeys(fk);
           model.getTable(exportedFks.getString("FKTABLE_NAME")).getColumn(exportedFks.getString("FKCOLUMN_NAME")).setChildForeignKey(fk);
-
+          
+         
+          
         } while (exportedFks.next());
       }
     }

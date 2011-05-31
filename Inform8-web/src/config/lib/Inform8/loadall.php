@@ -40,10 +40,10 @@
     Inform8Context::getClassRegistry()->registerClass('SimpleMailer', 'config/lib/Inform8/mail/SimpleMailerClass.php');
     Inform8Context::getClassRegistry()->registerClass('FromName', 'config/lib/Inform8/mail/TemplateMailer.php');
     Inform8Context::getClassRegistry()->registerClass('TemplateMailer', 'config/lib/Inform8/mail/TemplateMailer.php');
-    Inform8Context::getClassRegistry()->registerClass('DbTemplate', 'config/lib/Inform8/mail/templates/DbTemplateMailer.php');
-    Inform8Context::getClassRegistry()->registerClass('EmailTemplate', 'config/lib/Inform8/mail/templates/Template.php');
-    Inform8Context::getClassRegistry()->registerClass('FileTemplate', 'config/lib/Inform8/mail/templates/Template.php');
-    
+    Inform8Context::getClassRegistry()->registerClass('DbTemplate', 'lib/Inform8/mail/templates/DbTemplate.php');
+    Inform8Context::getClassRegistry()->registerClass('IEmailTemplate', 'lib/Inform8/mail/templates/IEmailTemplate.php');
+    Inform8Context::getClassRegistry()->registerClass('FileTemplate', 'lib/Inform8/mail/templates/FileTemplate.php');
+        
     require_once 'recaptcha/recaptchalib.php';
     
     Inform8Context::getClassRegistry()->registerClass('Level', 'config/lib/Inform8/security/Level.php');

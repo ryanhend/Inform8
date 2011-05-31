@@ -47,16 +47,16 @@ class FileTemplate implements EmailTemplate{
   }
 
 
-  public getSubjectTemplate() {
-    file_get_contents($this->subjectTemplateFile);
+  public function getSubjectTemplate() {
+    return file_get_contents($this->subjectTemplateFile);
   }
 
-  public getTextTemplate() {
-    file_get_contents($this->textTemplateFile);
+  public function getTextTemplate() {
+    return file_get_contents($this->textTemplateFile);
   }
 
-  public getHtmlTemplate() {
-    file_get_contents($this->htmlTemplateFile);
+  public function getHtmlTemplate() {
+    return file_get_contents($this->htmlTemplateFile);
   }
 
 

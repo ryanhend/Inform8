@@ -35,7 +35,7 @@ abstract class LongPoller {
     //Query database for data
     while($data == NULL && $timeout < $this->timeoutTime) {
       $data = $this->loadData();
-      if($data != NULL){
+      if($data == NULL){
 
         //No new orders, flush to notify php still alive
         flush();
