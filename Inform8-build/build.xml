@@ -14,7 +14,7 @@
   <target name="buildDistributions">
   	<ant dir="essentials" antfile="build.xml" target="build" />
   	<ant dir="web" antfile="build.xml" target="build" />
-  	<ant dir="mobile-web" antfile="build.xml" target="build" />
+  	<!--<ant dir="mobile-web" antfile="build.xml" target="build" />-->
     <ant dir="plus" antfile="build.xml" target="build" />
   </target>
 
