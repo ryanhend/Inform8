@@ -30,13 +30,17 @@
     <mkdir dir="${gen.dist.folder}" />
     
     <copy todir="${gen.dist.folder}" overwrite="true">
-      <fileset dir="${gen.out.folder}" includes="**/*" excludes="bo/*"></fileset>
+      <fileset dir="${gen.out.folder}" includes="**/*" excludes="config/lib/Inform8/bo/**"></fileset>
       <fileset dir="php" includes="**/*"></fileset>
     </copy>
 
-    <copy todir="${gen.dist.folder}/bo" overwrite="false">
-      <fileset dir="${gen.out.folder}/bo"></fileset>
-    </copy>
+	<!-- New Files only -->
+    <copy todir="${gen.dist.folder}/config/lib/Inform8/bo/" verbose="true">
+      <fileset dir="${gen.out.folder}/config/lib/Inform8/bo/">
+          <present targetdir="${gen.dist.folder}/config/lib/Inform8/bo/" present="srconly"/>
+      </fileset>
+    </copy> 
+
     
   </target>
 

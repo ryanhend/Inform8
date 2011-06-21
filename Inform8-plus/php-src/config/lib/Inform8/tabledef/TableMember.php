@@ -56,7 +56,12 @@
 		
 		function getDisplaySettings() {
 			return $this->displaySettings;
-		}			
+		}	
+
+		function getFromObject($obj) {
+		  $m = "get".$this->name;
+		  return $obj->m();
+		}
 	}	
 	
 ?>

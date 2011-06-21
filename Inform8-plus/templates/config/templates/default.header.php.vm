@@ -58,7 +58,7 @@
         window.I8.grids = new Object();
         
         window.I8.cal = new Object();
-        window.I8.cal.display = ${config.getAllProperties().getProperty('jack.calendar.on', 'true')};
+        window.I8.cal.display = ${config.getAllProperties().getProperty('calendar.on', 'true')};
         
         <?php
             $settings = StorageIQL::select()->start(0)->limit(1)->getFirst();

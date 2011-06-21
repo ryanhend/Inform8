@@ -18,9 +18,9 @@ class ${table.name}HttpBuilder {
   function loadFromHttpRequest($obj) {
     #foreach( $col in ${table.columns} )
 		#if($col.settings.hasLabel('PASSWORD'))
-	 		$obj->set${col.name}(md5(Request::Request::getOrPost('$col.name')));
+	 		$obj->set${col.name}(md5(Request::getOrPost('$col.name')));
 	 	#else
-			$obj->set${col.name}(Request::Request::getSafeGetOrPost('$col.name'));
+			$obj->set${col.name}(Request::getSafeGetOrPost('$col.name'));
 	 	#end	
 	#end  
   }

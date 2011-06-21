@@ -100,3 +100,24 @@ CREATE TABLE  `Storage` (
   PRIMARY KEY  (`StorageId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+
+--  ====================================== 
+--        Render settings for display 
+--  ======================================
+CREATE TABLE `TableRenderSettings` (
+  `TableRenderSettingsId` smallint unsigned NOT NULL auto_increment,
+  `Tablename` varchar(255) NOT NULL,
+  PRIMARY KEY  (`TableRenderSettingsId`)
+) ENGINE=InnoDB CHARSET=utf8;
+
+CREATE TABLE `ColumnRenderSettings` (
+  `ColumnRenderSettingsId` smallint unsigned NOT NULL auto_increment,
+  `Columnname` varchar(255) NOT NULL,
+  `DisplayIndex` smallint unsigned DEFAULT 999,
+  `TableRenderSettingsId` smallint unsigned,
+  PRIMARY KEY  (`ColumnRenderSettingsId`)
+) ENGINE=InnoDB CHARSET=utf8;
+
+ALTER TABLE `ColumnRenderSettings` ADD CONSTRAINT FOREIGN KEY (`TableRenderSettingsId`) REFERENCES `TableRenderSettings` (`TableRenderSettingsId`) ON DELETE SET NULL ON UPDATE CASCADE; 

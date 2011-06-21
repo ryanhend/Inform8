@@ -11,6 +11,42 @@
  * 
  */
 
+
+function sortByRenderSettings(a,b) {
+	return a.DisplayIndex - b.DisplayIndex;
+}
+
+
+function orderColumns(tableDefinition) {
+	
+	ordered = new Array();
+	
+	if (tableDefinition.rendersettings != null) {
+		tableDefinition.rendersettings.sort(sortByRenderSettings);	
+	}else {
+		tableDefinition.rendersettings = new Array();
+	}
+	
+	
+	for (i=0; i < tableDefinition.rendersettings.length; i++) {
+		ordered.push(tableDefinition.members[tableDefinition.rendersettings[i].Columnname]);
+	}
+	
+	for (x in tableDefinition.members) {
+		var mem = tableDefinition.members[x];
+		var found = false; 
+		for (var i=0; i < ordered.length; ++i ) {
+			if(mem.name == ordered[i].name) {
+				found = true;
+			}
+		}
+		if(!found) {
+			ordered.push(mem);	
+		}
+	}
+	return ordered;
+}
+
 function newClearLeft() {
   return $('<div />').css( {
     "clear" : 'left'

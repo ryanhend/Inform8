@@ -71,6 +71,9 @@
     <copy todir="${dist.folder}/Inform8/">
       <fileset dir="build/gen"></fileset>
     </copy>    
+    <copy todir="${dist.folder}/Inform8/config">
+      <fileset dir="config"></fileset>
+    </copy>
   </target> 
 
 </project>

@@ -113,7 +113,10 @@ class ${table.name}Data {
        * @throw Inform8DbException if there is an error reteiving the child record.
        */ 		
       public function get${col.name}AsObject() {
-        #if($cacheFkValues)
+        if($this->${col.name} == NULL) {
+			return NULL;
+		}
+		#if($cacheFkValues)
         if ($this->${col.name}Object == NULL) {
         #end
           $otherTableDao = new ${col.childForeignKey.masterTable.name}Dao();

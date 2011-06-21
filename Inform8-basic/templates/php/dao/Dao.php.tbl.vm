@@ -102,11 +102,9 @@ class ${table.name}Dao extends Inform8Dao{
     }
 
     $newObj = $this->get($id);
-		
-    #if($config.allProperties.getProperty("jack.history.on", "false") == "true")
-      #if(${table.name} != 'JackHistory')
-        $this->_saveHistory($newObj);
-      #end
+
+    #if(${config.allProperties.getProperty("history.enabled", "false")} == "true")
+		$this->_saveHistory($newObj);
     #end
 		
     return $newObj;
@@ -169,11 +167,9 @@ class ${table.name}Dao extends Inform8Dao{
     $this->checkResult($result);
     $toReturn = $this->get($obj->get${table.primaryKey.name}());
 		
-    #if($config.allProperties.getProperty("jack.history.on", "false") == "true")
-      #if(${table.name} != 'JackHistory')
-        $this->_saveHistory($toReturn);
-      #end
-    #end		
+    #if(${config.allProperties.getProperty("history.enabled", "false")} == "true")
+		$this->_saveHistory($toReturn);
+    #end
 
     return $toReturn;
   }
@@ -506,21 +502,21 @@ class ${table.name}Dao extends Inform8Dao{
     return $object;
   }
   
-  #set($historyTable = ${config.allProperties.getProperty("history.table.name", "Inform8History")})
+  #set($historyTable = ${config.allProperties.getProperty("history.table.name", "History")})
   #set($historyEnabled = ${config.allProperties.getProperty("history.enabled", "false")} == "true")
   #if ($historyEnabled)
-      #if(${table.name} != $historyTable )
         protected function _saveHistory($obj) {
+		  #if(${table.name} != $historyTable )
           $historyDao = new ${historyTable}Dao();
           $jsonBuilder = new ${table.name}JsonBuilder();
           
           $historyBo = new ${historyTable}();
-          $historyBo->TableName = '${table.name}';
-          $historyBo->RecordId = $obj->getPk();
-          $historyBo->Json = $jsonBuilder->toJson($obj);
+          $historyBo->setTableName('${table.name}');
+          $historyBo->setRecordId($obj->getPk());
+          $historyBo->setJson($jsonBuilder->toJson($obj));
           $historyDao->create($historyBo);
+		  #end
         }
-      #end
   #end
 }
 ?>

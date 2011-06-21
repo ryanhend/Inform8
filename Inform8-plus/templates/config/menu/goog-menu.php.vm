@@ -70,7 +70,7 @@
   <div id="jack-goog-menu" class="goog-toolbar">
   	<div id="jackmenu-home" class="goog-toolbar-button jack-menu-home"><a href="#" onclick="javascript:newTab('ajax.php?action=home', '<?php echo WebContext::getLanguage()->get('homeTab'); ?>'); return false;"><img src="images/smtb/home.png" /></a></div>
 	<hr>
-	#if(${config.getAllProperties().getProperty('jack.calendar.on', 'true')} == true)
+	#if(${config.getAllProperties().getProperty('calendar.on', 'true')} == true)
 		<div id="jackmenu-calendar" class="goog-toolbar-button jack-menu-calendar"><a href="#" onclick="javascript:newTab('ajax.php?action=calendar', '<?php echo WebContext::getLanguage()->get('calendarTab'); ?>'); return false;"><img src="images/smtb/calendar.png" /></a></div>
 		<hr>
 	#end			

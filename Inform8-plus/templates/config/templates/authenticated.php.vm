@@ -13,12 +13,12 @@
 <div id="content">
     <ul id="tabHeader">
         <li><a class="jack_tabs_menuTab" href="#tab-home"><?php echo WebContext::getLanguage()->get('homeTab'); ?></a></li>
-        #if(${config.getAllProperties().getProperty('jack.calendar.on', 'true')} == true)<li><a href="#tab-cal"><?php echo WebContext::getLanguage()->get('calendarTab'); ?></a></li>#end
+        #if(${config.getAllProperties().getProperty('calendar.on', 'true')} == true)<li><a href="#tab-cal"><?php echo WebContext::getLanguage()->get('calendarTab'); ?></a></li>#end
     </ul>
     <div id="tab-home">
         <?php include 'config/authenticatedajax/home.php'; ?>
     </div>
-    #if(${config.getAllProperties().getProperty('jack.calendar.on', 'true')} == true)
+    #if(${config.getAllProperties().getProperty('calendar.on', 'true')} == true)
     <div id="tab-cal">
         <?php include 'config/authenticatedajax/calendar.php'; ?>
     </div>
@@ -51,6 +51,14 @@
   window.I8.td = new Object();
   #foreach( $table in $tables )
     window.I8.td.${table.name} = ${ds}.parseJSON('<?php $def = new ${table.name}Definition(); echo $def->toJson(); ?>');
+	<?php 
+		$builder = new ColumnRenderSettingsJsonBuilder(); 
+		$objs = ColumnRenderSettingsIQL::select()
+			->join(ColumnRenderSettingsIQL::$TABLERENDERSETTINGSID, TableRenderSettingsIQL::$_TABLE, TableRenderSettingsIQL::$TABLERENDERSETTINGSID)
+			->where(TableRenderSettingsIQL::$_TABLE, TableRenderSettingsIQL::$TABLENAME, '=', '${table.name}')
+			->get();
+	?>
+	window.I8.td.${table.name}.rendersettings = ${ds}.parseJSON('<?php echo $builder->toJson($objs); ?>');
   #end
   
   //quick edit dialog

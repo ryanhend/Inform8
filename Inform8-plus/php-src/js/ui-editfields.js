@@ -13,8 +13,10 @@ function buildFields(tableDefinition, object, formContent, testDisplayinGrid, ig
 	var build = new Object();
 	build['rtes'] = new Array();
 	
-	for (x in tableDefinition.members) {
-		var theMember = tableDefinition.members[x];
+	var om = orderColumns(tableDefinition);	
+	
+	for (x=0; x < om.length; x++) {
+		var theMember = om[x];
 		if((ignoredFields == null || $.inArray(theMember, ignoredFields) < 0) && (!testDisplayinGrid || theMember.displaySettings.displayInGrid)) {
 			var daValue = '';
 			if (object != null) {
@@ -138,13 +140,13 @@ function newTextInput(theTable, theFieldDefinition, value) {
 	daField.addClass("jack-field");
 	daField.addClass("jack-field-text");
 		
-	if($.inArray('www', theFieldDefinition.displaySettings.labels) >= 0) {
+	if($.inArray('WEB_ADDRESS', theFieldDefinition.displaySettings.labels) >= 0) {
 		daField.addClass("url");
 	}
-	if($.inArray('email', theFieldDefinition.displaySettings.labels) >= 0) {
+	if($.inArray('EMAIL', theFieldDefinition.displaySettings.labels) >= 0) {
 		daField.addClass("email");
 	}
-	if($.inArray('notnull', theFieldDefinition.displaySettings.labels) >= 0) {
+	if($.inArray('NOT_NULL', theFieldDefinition.displaySettings.labels) >= 0) {
 		daField.addClass("required");
 	}
 
@@ -203,7 +205,7 @@ function newIntInput(theTable, theFieldDefinition, value) {
 		.attr('type', 'text').attr('value', value);
 
 		
-	if($.inArray('notnull', theFieldDefinition.displaySettings.labels) >= 0) {
+	if($.inArray('NOT_NULL', theFieldDefinition.displaySettings.labels) >= 0) {
 		daField.addClass("required");
 	}
 	
@@ -222,7 +224,7 @@ function newFkIntInput(theTable, theFieldDefinition, value) {
 	var updateFunction = function() {
 			daField.html('');
 			
-			if ($.inArray('notnull', theFieldDefinition.displaySettings.labels) < 0) {
+			if ($.inArray('NOT_NULL', theFieldDefinition.displaySettings.labels) < 0) {
 				var option = $('<option />');
 				option.appendTo(daField);
 			}
@@ -259,7 +261,7 @@ function newDecimalInput(theTable, theFieldDefinition, value) {
 	var daField = $('<input />').attr('name', theFieldDefinition.name).attr('id', theTable.name + '-' + theFieldDefinition.name)
 		.attr('type', 'text').attr('size', 10).attr('value', value);
 		
-	if($.inArray('notnull', theFieldDefinition.displaySettings.labels) >= 0) {
+	if($.inArray('NOT_NULL', theFieldDefinition.displaySettings.labels) >= 0) {
 		daField.addClass("required");
 	}
 	
@@ -275,7 +277,7 @@ function newPriorityInput(theTable, theFieldDefinition, value) {
 	
 	daField = $('<div />').append('High: ').append(highField).append('&nbsp;&nbsp; Medium: ').append(mediumField).append('&nbsp;&nbsp; Low: ').append(lowField);
 	
-	if($.inArray('notnull', theFieldDefinition.displaySettings.labels) >= 0) {
+	if($.inArray('NOT_NULL', theFieldDefinition.displaySettings.labels) >= 0) {
 		highField.addClass("required").addClass("jack-field").addClass("jack-field-hml");
 		mediumField.addClass("required").addClass("jack-field-hml");
 		lowField.addClass("required").addClass("jack-field-hml");
@@ -305,7 +307,7 @@ function newRating1To10Input(theTable, theFieldDefinition, value) {
 		daField.append(input);
 	}
 	
-	if($.inArray('notnull', theFieldDefinition.displaySettings.labels) >= 0) {
+	if($.inArray('NOT_NULL', theFieldDefinition.displaySettings.labels) >= 0) {
 		daField.addClass("required").addClass("jack-field").addClass("jack-field-rating1to10");
 	}
 	
@@ -326,7 +328,7 @@ function newTextAreaInput(theTable, theFieldDefinition, value){
 	var daField = $('<textarea />').attr('name', theFieldDefinition.name).attr('id', theTable.name + '-' + theFieldDefinition.name)
 		.attr('rows', 5).attr('cols', 60).val(value);
 		
-	if($.inArray('notnull', theFieldDefinition.displaySettings.labels) >= 0) {
+	if($.inArray('NOT_NULL', theFieldDefinition.displaySettings.labels) >= 0) {
 		daField.addClass("required");
 	}
 	
@@ -360,7 +362,7 @@ function newDateInput(theTable, theFieldDefinition, value){
 	
 	daPickerField.addClass("jack-field").addClass("jack-field-date");
 	
-	if($.inArray('notnull', theFieldDefinition.displaySettings.labels) >= 0) {
+	if($.inArray('NOT_NULL', theFieldDefinition.displaySettings.labels) >= 0) {
 		daPickerField.addClass("required");
 	}	
 	

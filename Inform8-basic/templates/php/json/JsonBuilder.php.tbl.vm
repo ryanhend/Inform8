@@ -30,9 +30,19 @@ class ${table.name}JsonBuilder {
    * @return String The JSON string representing this object
    */
   public function toJson($obj) {
-    // basic fields
-    $objArray = $this->getBaseFieldArray($obj);
-    return json_encode($objArray);  
+	if(is_array($obj)) {
+		$arrayObjs = array();
+		foreach($obj as $o) {
+			${ds}arrayObjs[] = $this->getBaseFieldArray($o);
+		}
+		return json_encode($arrayObjs);
+	}else if(is_object($obj)) {
+    	// basic fields
+		
+        $objArray = $this->getBaseFieldArray($obj);
+        return json_encode($objArray);  
+	}
+	return null;
   }
   
   
@@ -70,7 +80,7 @@ class ${table.name}JsonBuilder {
             $theObjs = $obj->get${ot.name}ObjectsVia${daFk.childTable.name}();
             $theObjsArray = array();
             foreach($theObjs as $theObj) {
-                $theObjsArray[] = $builder->toJson($theObj);
+                ${ds}theObjsArray[] = $builder->toJson($theObj);
             }            
             $objArray['linked${ot.name}ObjectsVia${daFk.childTable.name}'] = $theObjsArray;
         #else
@@ -78,7 +88,7 @@ class ${table.name}JsonBuilder {
             $theObjs = $obj->get${daFk.childTable.name}ObjectsVia${daFk.childColumnName}();
             $theObjsArray = array();
             foreach($theObjs as $theObj) {
-                $theObjsArray[] = $builder->toJson($theObj);
+                ${ds}theObjsArray[] = $builder->toJson($theObj);
             }
             $objArray['${daFk.childTable.name}ObjectsVia${daFk.childColumnName}'] = $theObjsArray;
         #end

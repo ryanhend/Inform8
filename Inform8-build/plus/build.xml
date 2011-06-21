@@ -94,12 +94,8 @@
         <fileset dir="../../Inform8-plus/output/dist/bin">
           <include name="**/*" />
         </fileset>
-    </copy>    
-
-    <!-- fix up te dist folder setting -->
-    <replaceregexp file="../${dist.folder}/plus/Inform8/config/gen.properties" 
-      match="gen\.dist\.folder\=(.*)" replace="gen.dist.folder=../site/"></replaceregexp>
-    
+    </copy>
+  	
     <zip destfile="../${dist.folder}/plus/Inform8.plus.alpha.${plus.build.major}.${plus.build.minor}.zip">
       <fileset dir="../${dist.folder}/plus/">
         <include name="**/*" />

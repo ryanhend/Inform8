@@ -10,8 +10,9 @@
  */
 
 function buildViewFields(tableDefinition, object, viewContent) {
-	for (x in tableDefinition.members) {
-		var daMem = tableDefinition.members[x];
+	var om = orderColumns(tableDefinition);
+	for (x=0; x < om.length; x++) {
+		var daMem = om[x];
 		var daValue = '';
 		if (object != null) {
 			daValue = object[daMem.name];
@@ -130,15 +131,22 @@ function newIntView(theTable, theFieldDefinition, value, object) {
 	}else if($.inArray('rating1-10', theFieldDefinition.displaySettings.labels) >= 0) {
 		return newRating1To10View(theTable, theFieldDefinition, value);
 	}
+	
 	if( 'foriegnKey' in theFieldDefinition && theFieldDefinition.foriegnKey != null && value != null) {
+		
 		var theobj = $.parseJSON(object[theFieldDefinition.name+'Object']);
 		var fkField = window.I8.td[theFieldDefinition.foriegnKey.otherTable].fkDataField.name;
 		var daField = $('<div />').attr('name', theFieldDefinition.name).attr('id', theTable.name + '-' + theFieldDefinition.name);
- 		var title = getLanguageEntry('Tbl_' + theFieldDefinition.foriegnKey.otherTable) + " " + value;
+		var title = getLanguageEntry('Tbl_' + theFieldDefinition.foriegnKey.otherTable) + " " + value;
+
+		console.log('javascript:newTab("ajax.php?action=Update&object='+theFieldDefinition.foriegnKey.otherTable+'&id='+value+'", "' + title + '"); return false;');
 		
 		$('<a />').attr('href', '#')
-			.attr('onclick', 'javascript:newTab("ajax.php?action=Update&object='+theFieldDefinition.foriegnKey.otherTable+'&id='+value+'", "' + title + '"); return false;')
 			.text(theobj[fkField])
+			.click(function () {
+				newTab('ajax.php?action=Update&object=' + theFieldDefinition.foriegnKey.otherTable + '&id=' + value,  title); 
+				return false; 
+			})
 			.appendTo(daField);
 			
 		return newViewFieldBlock(theTable, theFieldDefinition, daField);

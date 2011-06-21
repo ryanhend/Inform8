@@ -30,6 +30,10 @@
 		function getMembers() {
 			return $this->members;
 		}	
+
+	    function getMember($name) {
+			return $this->members[$name];
+		}		
 		
 		function getDisplaySettings() {
 			return $this->displaySettings;

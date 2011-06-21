@@ -10,11 +10,8 @@
 class ${table.name}FkDataBuilder { 
 
   function toFkData($obj) {
-    #if($table.fkDataMember)
-        return $obj->get${table.fkDataMember.name}();
-    #else
-        return $obj->getPk();
-    #end
+	#if(${table.settings.hasProperty('fkMember')}) #set($cname = ${table.settings.getProperty('fkMember', '')}) #set($col = ${table.getColumn($cname)}) #else #set($col = ${table.primaryKey}) #end  
+    return $obj->get${col.name}();
   }
 
 }    

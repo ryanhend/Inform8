@@ -123,9 +123,7 @@
 		$response->records = $totalCount;
 		
 		for ($i=0; $i < $objCount; $i++) {
-			
-			$response->rows[$i][$def->getTable()->getPrimaryKey()->getName()]=$objs[$i]->getPk(); 
-			$response->rows[$i]['cell']=$builder->toJqGridArray($objs[$i]); 
+			$response->rows[$i]=$builder->toJqGridArray($objs[$i]); 
 		}		
  
 		echo json_encode($response); 		

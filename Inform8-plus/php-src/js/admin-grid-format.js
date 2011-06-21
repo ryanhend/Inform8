@@ -42,7 +42,7 @@ function formatCell(cellvalue, options, rowObject) {
 		jqCellVal = daCell.val;
 	}
 	
-	return jqCellVal;// += '<div style="display:none" class="jack-origData">' + cellvalue + '</div>';
+	return jqCellVal;
 }	
 
 

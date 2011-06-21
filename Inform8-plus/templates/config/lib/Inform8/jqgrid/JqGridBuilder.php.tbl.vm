@@ -11,24 +11,26 @@ class ${table.name}JqGridBuilder {
 
   function toJqGridArray($obj) {
 	return array(
-    '-',
-		$obj->get${table.primaryKey.name}()
+		'EditButtons'=>'-',
+		'id'=>$obj->get${table.primaryKey.name}()
 		#foreach( $col in $table.columns ) 
 			#if(!${col.settings.hasLabel('hidden')}),
-    			#if($col.masterForeignKey) 
-						$this->buildFkCellValue('${table.name}','$col.masterForeignKey.otherTable.name', '${col.name}', $obj->get${col.name}(), $this->getFKData($obj->get${col.name}Object()))
+    			#if($col.childForeignKey) 
+					#if(${col.childForeignKey.masterTable.settings.hasProperty('fkMember')}) #set($cname = ${col.childForeignKey.masterTable.settings.getProperty('fkMember', '')}) #set($fkcol = ${col.childForeignKey.masterTable.getColumn($cname)}) #else #set($fkcol = ${col.childForeignKey.masterTable.primaryKey}) #end
+					'${col.name}'=>$this->buildFkCellValue('${table.name}','${col.childForeignKey.masterTable.name}', '${col.name}', $obj->get${col.name}(), $this->getFkData($obj->get${col.name}AsObject(), '${fkcol.name}'))
     			#else 
-    				$this->buildCellValue('${table.name}', '${col.name}', $obj->get${col.name}())
+    				'${col.name}'=>$this->buildCellValue('${table.name}', '${col.name}', $obj->get${col.name}())
     			#end
 			#end 
 		#end);
   }
   
-  function getFKData($obj) {
+  function getFKData($obj, $field) {
 	if (is_null($obj) || (!is_object($obj) && $obj == -1)) {
 	  return "";
 	}else {
-	  return $obj->getFkData();
+		$method = 'get' . $field;
+		return $obj->$method();
 	}
   }
   

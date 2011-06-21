@@ -28,6 +28,7 @@ $classLookup = Inform8Context::getClassRegistry();
 #foreach( $table in $tables )
     $classLookup->registerClass('${table.name}HttpBuilder', 'config/lib/Inform8/http/${table.name}HttpBuilder.php');
     $classLookup->registerClass('${table.name}JqGridBuilder', 'config/lib/Inform8/jqgrid/${table.name}JqGridBuilder.php');
+	$classLookup->registerClass('${table.name}JqGrid', 'config/lib/Inform8/jqgrid/${table.name}JqGrid.php');
     $classLookup->registerClass('${table.name}Definition', 'config/lib/Inform8/dao/${table.name}Def.php');
     $classLookup->registerClass('${table.name}ExcelBuilder', 'config/lib/Inform8/rest/${table.name}ExcelBuilder.php');
     $classLookup->registerClass('${table.name}FkDataBuilder', 'config/lib/Inform8/fk/${table.name}FkDataBuilder.php');

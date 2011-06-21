@@ -40,9 +40,9 @@ function buildQuickEditPanel(gridId, id, tableDefinition, panel) {
 	var processFn = function(data) {
 		$('#jack-quick-edit-dialog').dialog('close');
 		for (cidx in data.operationResults[0].displayContent) {
-			if (cidx > 1) {
+			if (cidx != 'id' && cidx != 'EditButtons') {
 				var memAndVal = $.parseJSON(data.operationResults[0].displayContent[cidx]);
-				//console.log(memAndVal);
+				console.log(memAndVal);
 				if ('mem' in memAndVal) {
 					
 					// update table
@@ -186,7 +186,6 @@ function buildCreateForm(tableDefinition, panel, formId) {
 			submitOptions = new Object();
 			submitOptions.loadingMessage = getLanguageEntry('Tbl_' + tableDefinition.name + '__creating');
 			submitOptions.formdata = formdata;
-
 			submitForm(submitOptions);
    		}
     	return false;	
@@ -220,10 +219,6 @@ function buildCreateFormInDialog(tableDefinition, dialog, gridId) {
 	$('<input />').addClass('jack-crud-reset').attr("type", "reset").attr("value", getLanguageEntry('reset')).appendTo(inputs);
 	$('<input />').addClass('jack-crud-save').attr("type", "submit").attr("value", getLanguageEntry('save')).appendTo(inputs);
 	
-//	$('<input />').attr("type", "checkbox").attr("name", "form___keepOpen")
-//		.attr("value", 0).appendTo(inputs);
-//	inputs.append('Keep Open');
-
 	inputs.appendTo(formContent);
 	
 	var processFn = function() {
@@ -248,7 +243,7 @@ function buildCreateFormInDialog(tableDefinition, dialog, gridId) {
    		}
     	return false;	
 	};
-	if (tableColumnsWithLabel(tableDefinition.name, 'FILE').length >= 0) {
+	if (tableColumnsWithLabel(tableDefinition.name, 'FILE').length > 0) {
 		submitOptions = new Object();
 		submitOptions.loadingMessage = getLanguageEntry('Tbl_' + tableDefinition.name + '__saving');
 		submitOptions.build = build;
@@ -273,7 +268,7 @@ function configureIFrameForm(submitOptions) {
 	submitOptions.formContent.attr('enctype', 'multipart/form-data');
 	submitOptions.formContent.attr('method', 'POST');
 	submitOptions.formContent.append(
-			$('<input />').attr('type', 'hidden').attr('name', 'wta').attr('value', '1')
+	  $('<input />').attr('type', 'hidden').attr('name', 'wta').attr('value', '1')
 	);
 	
 	submitOptions.formContent.iframePostForm({
@@ -300,20 +295,21 @@ function configureIFrameForm(submitOptions) {
 	      		if ('successCallback' in submitOptions) {
 	      			submitOptions.successCallback(data);
 	      		}
+	      		if ('gridId' in submitOptions) {
+	      			reloadGrid(submitOptions.gridId);
+	      		}
 	    	}else {
 	      		displayMessage('<img src="images/failed.png" class="feeback-success-img" /> ' + data.displayMessage);
 			}      
         }
-    });			
-	
-	
+    });				
 }
+
 
 function submitForm(submitOptions) {
 	if ('loadingMessage' in submitOptions) {
 		displayTempMessage('<img src="images/loading.gif" /> ' + submitOptions.loadingMessage, false);
 	}
-	
 	$.ajax({
 	  	type: "POST",
 	    url: "ajax.php",
@@ -326,6 +322,7 @@ function submitForm(submitOptions) {
 	      			submitOptions.successCallback(data);
 	      		}
 	      		if ('gridId' in submitOptions) {
+	      			
 	      			reloadGrid(submitOptions.gridId);
 	      		}
 	    	}else {
