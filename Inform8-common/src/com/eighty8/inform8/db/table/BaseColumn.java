@@ -8,6 +8,7 @@
 package com.eighty8.inform8.db.table;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.eighty8.inform8.db.Settings;
@@ -50,6 +51,7 @@ public class BaseColumn implements Inform8Column {
 
   public void setType(FieldType type) {
     this.type = type;
+    this.settings.getProperties().putAll(type.getProperties());
   }
 
 

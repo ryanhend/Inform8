@@ -158,10 +158,11 @@ function newTextInput(theTable, theFieldDefinition, value) {
 function newEnumInput(theTable, theFieldDefinition, value) {
 	var daField = $('<select />').attr('name', theFieldDefinition.name).attr('id', theTable.name + '-' + theFieldDefinition.name);
 	
-	var enumOptions = theFieldDefinition.displaySettings.properties.enumOptions.split(",");
+	var enumOptions = theFieldDefinition.displaySettings.properties.ENUM_LIST.split(",");
 	for(opt in enumOptions) {
-		var option = $('<option />').html(enumOptions[opt]);
-		if (value == enumOptions[opt]) {
+		var tval = $.trim(enumOptions[opt]);
+		var option = $('<option />').html(tval);
+		if (value == tval) {
 			option.attr('selected', true);
 		}
 		option.appendTo(daField);

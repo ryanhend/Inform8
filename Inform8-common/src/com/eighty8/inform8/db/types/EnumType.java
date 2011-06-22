@@ -18,7 +18,7 @@ public class EnumType extends BaseFieldType {
 
   public EnumType(String[] options) {
     this.options = options;
-    this.properties.put(Property.ENUM_LIST.name(), Arrays.asList(options).toString());
+    this.properties.put(Property.ENUM_LIST.name(), Arrays.asList(options).toString().replace("[", "").replace("]", ""));
   }
 
 

@@ -130,12 +130,13 @@ function displayEnumOptions(quickSearchId, tableMember) {
   $("<option value='eq'>" + getLanguageEntry('searchEqualTo') + "</option>").appendTo(comboOptions);
   $("<option value='neq'>" + getLanguageEntry('searchNotEqualTo') + "</option>").appendTo(comboOptions);
 
-  var enums = tableMember.displaySettings.properties.enumOptions;
+  var enums = tableMember.displaySettings.properties.ENUM_LIST;
 
   enumOptions.html("");
   var enumList = enums.split(",");
   for (i in enumList) {
-    $("<option value='" + enumList[i] + "'>" + enumList[i] + "</option>").appendTo(enumOptions);
+	var val = $.trim(enumList[i]);
+    $("<option value='" + val + "'>" + val + "</option>").appendTo(enumOptions);
   }
 }
 

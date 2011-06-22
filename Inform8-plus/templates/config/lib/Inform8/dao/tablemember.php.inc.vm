@@ -6,4 +6,4 @@
  * http://www.inform8.com
  * http://www.88creative.com.au
 *#
-new TableMember('$col.name', '$col.type.name', #if($col.defaultValue)'$col.defaultValue'#else NULL #end, ${col.settings.hasLabel('NOT_NULL')}, #parse('config/lib/Inform8/dao/memberfk.php.inc.vm'),  #parse('config/lib/inform8/dao/memberdisplaysettings.php.inc.vm'))
+new TableMember('$col.name', '$col.type.name', #if($col.defaultValue)'$col.defaultValue'#else NULL #end, ${col.settings.hasLabel('NOT_NULL')}, #parse('config/lib/Inform8/dao/memberfk.php.inc.vm'),  #parse('config/lib/Inform8/dao/memberdisplaysettings.php.inc.vm'))

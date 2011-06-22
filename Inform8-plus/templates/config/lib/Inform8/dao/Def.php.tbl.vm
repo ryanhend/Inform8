@@ -14,10 +14,10 @@ class ${table.name}Definition {
   function ${table.name}Definition() {
 	#set($col = ${table.primaryKey})
 	$this->table = new Table('${table.name}', 
-		#parse('config/lib/inform8/dao/tablemember.php.inc.vm'),
-		#if(${table.settings.hasProperty('fkMember')}) #set($cname = ${table.settings.getProperty('fkMember', '')}) #set($col = ${table.getColumn($cname)}) #else #set($col = ${table.primaryKey}) #end #parse('config/lib/inform8/dao/tablemember.php.inc.vm') , #parse('config/lib/inform8/dao/tabledisplaysettings.php.inc.vm'));
+		#parse('config/lib/Inform8/dao/tablemember.php.inc.vm'),
+		#if(${table.settings.hasProperty('fkMember')}) #set($cname = ${table.settings.getProperty('fkMember', '')}) #set($col = ${table.getColumn($cname)}) #else #set($col = ${table.primaryKey}) #end #parse('config/lib/Inform8/dao/tablemember.php.inc.vm') , #parse('config/lib/Inform8/dao/tabledisplaysettings.php.inc.vm'));
 	#foreach( $col in $table.columns )
-		$this->table->addMember(#parse('config/lib/inform8/dao/tablemember.php.inc.vm'));
+		$this->table->addMember(#parse('config/lib/Inform8/dao/tablemember.php.inc.vm'));
 	#end
   }
   

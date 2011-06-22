@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -304,11 +305,13 @@ public class MysqlModelBuilder implements ModelBuilder {
 
       // ENUM
     } else if (mysqlDataTypeName.toLowerCase().indexOf("enum") >= 0) {
+      LOG.debug("Extracting Enumbs for table " + table.getName() + " Coloumn: " + cols.getString("COLUMN_NAME"));
       Statement columns = connection.getConnection().createStatement();
       columns.execute("SHOW COLUMNS FROM " + table.getName() + " WHERE Field = \'" + cols.getString("COLUMN_NAME") + "\'");
       ResultSet resultSet = columns.getResultSet();
       if (resultSet.first()) {
         String enumDef = resultSet.getString("Type");
+        LOG.debug("Enums: " + Arrays.asList(new EnumParser().parse(enumDef)));
         return new EnumType(new EnumParser().parse(enumDef));        
       }
     }
