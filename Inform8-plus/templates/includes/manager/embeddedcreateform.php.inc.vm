@@ -15,7 +15,7 @@
 			'<?php echo $embeddedformid; ?>',
 			window.I8.td['${fk.childTable.name}'],
 			null,
-			window.I8.td['${fk.childTable.name}'].members['${fk.otherField}'],
+			window.I8.td['${fk.childTable.name}'].members['${fk.masterColumnName}'],
 			'<?php echo $obj->get${table.primaryKey.name}(); ?>',
 			'<?php echo $currfkGridId ?>');
 	</script>

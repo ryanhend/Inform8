@@ -6,7 +6,15 @@
  * http://www.inform8.com
  * http://www.88creative.com.au
  */
-?><?php 
+?><?php
+	
+  #macro(getOtherTable $fk) 
+    #set($jt_cm = ${daFk.childTable.columnModel.copy()})
+    #set($temp = ${jt_cm.remove(${daFk.childColumnName})})
+    #set($oc = ${jt_cm.columns.get(0)})
+    #set($ot = ${jt_cm.columns.get(0).childForeignKey.masterTable})
+  #end
+
 /*  
   This class contains the Main 'CRUD' operations.
   
@@ -368,28 +376,47 @@ class ${table.name}Crud {
 ## End - if not read only.
 #end
   
-  #if($table.primaryKey.detailForeignKeys.size() > 0)
-    #foreach( $fk in $table.primaryKey.uniqueDetailForeignKeyList())
-      #if ($fk.childTable.settings.hasLabel('JOIN_TABLE'))
-          #if($fk.otherConnectingTableField().settings.hasLabel('embeddedjoin') 
-            || $fk.otherConnectingTableField().settings.hasLabel('embeddedlinkorjoin'))
-            #if (!${fk.otherConnectingTable().settings.hasLabel('DB_READ_ONLY')} && !${fk.childTable.settings.hasLabel('DB_READ_ONLY')})
+  #if($table.primaryKey.getMasterForeignKeys().size() > 0)
+    #foreach( $fk in $table.primaryKey.getMasterForeignKeys())
+		
+    	#if ($fk.childTable.settings.hasLabel('JOIN_TABLE'))
+            #getOtherTable($fk)
+    		#set($joinTable=${fk.childTable})
+			
+            #if (!${ot.settings.hasLabel('DB_READ_ONLY')} && !${joinTable.settings.hasLabel('DB_READ_ONLY')})
               
               ## Method to create new record in other table and link via join table
               #parse('config/ajax/includes//embeddedjoin-create.php.inc.vm')
              
               ## Method to link existing data in the other table, and delete the links
-              #if($fk.otherConnectingTableField().settings.hasLabel('embeddedlinkorjoin'))
+              #if($oc.settings.hasLabel('embeddedlinkorjoin'))
                 #parse('config/ajax/includes/embeddedjoin-link.php.inc.vm')
                 #parse('config/ajax/includes/embeddedjoin-delete-link.php.inc.vm')
               #end        ## Create and delete links
                 
-            #end          ## Not Read only on linked tables
+            #end  			
+			
+    	#else
+    		#set($ot=${fk.childTable})
+    		#set($oc=${fk.childTable.getColumn(${fk.childColumnName})})
+    		#set($joinTable=${fk.childTable})
+			
+    		#if (!${ot.settings.hasLabel('DB_READ_ONLY')})
+              #parse('config/ajax/includes//embeddedother.php.inc.vm')
+            #end			
+			
+    	#end		
+		
+		
+		
+		
+      #if ($fk.childTable.settings.hasLabel('JOIN_TABLE'))
+          #if($fk.otherConnectingTableField().settings.hasLabel('embeddedjoin') 
+            || $fk.otherConnectingTableField().settings.hasLabel('embeddedlinkorjoin'))
+        ## Not Read only on linked tables
           #end            ## link or join table for FK
       #else
-        #if (!${fk.childTable.settings.hasLabel('DB_READ_ONLY')})
-          #parse('config/ajax/includes//embeddedother.php.inc.vm')
-        #end
+        
       #end
     #end        ## End of for each FK        
   #end          ## End has FK's
