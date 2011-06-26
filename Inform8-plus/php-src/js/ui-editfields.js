@@ -17,7 +17,8 @@ function buildFields(tableDefinition, object, formContent, testDisplayinGrid, ig
 	
 	for (x=0; x < om.length; x++) {
 		var theMember = om[x];
-		if((ignoredFields == null || $.inArray(theMember, ignoredFields) < 0) && (!testDisplayinGrid || theMember.displaySettings.displayInGrid)) {
+		
+		if((ignoredFields == null || $.inArray(theMember, ignoredFields) < 0) && (!testDisplayinGrid || $.inArray('GRID_HIDE', theMember.displaySettings.labels) < 0 )) {
 			var daValue = '';
 			if (object != null) {
 				daValue = object[theMember.name];
@@ -40,7 +41,7 @@ function buildFields(tableDefinition, object, formContent, testDisplayinGrid, ig
 			}else if ($.inArray('FILE', theMember.displaySettings.labels) >= 0) {
 				newFileInput(tableDefinition, theMember, daValue).appendTo(formContent);
 			}else if (theMember.type == 'varchar') {
-				if ($.inArray('pwd', theMember.displaySettings.labels) >= 0) {
+				if ($.inArray('PASSWORD', theMember.displaySettings.labels) >= 0) {
 		  		newPasswordInput(tableDefinition, theMember, '').appendTo(formContent);
 			  }
 			  else {

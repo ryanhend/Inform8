@@ -12,7 +12,7 @@
   Typically used in a Many to Many relationship.
 *#
 function deleteMultiple${fk.childTable.name}Links() {
-  logToFile("delete ${fk.childTable.name} Links start");
+  //logToFile("delete ${fk.childTable.name} Links start");
 
   $otherDao = new ${fk.childTable.name}Dao();
   
@@ -52,6 +52,6 @@ function deleteMultiple${fk.childTable.name}Links() {
     $res->setFailed();
   }             
   
-  logToFile("delete ${fk.childTable.name} Links end");
+  //logToFile("delete ${fk.childTable.name} Links end");
   return $res;
 }

@@ -7,8 +7,8 @@
  * 
 *#<?php
   #macro(getOtherTable $fk) 
-    #set($jt_cm = ${daFk.childTable.columnModel.copy()})
-    #set($temp = ${jt_cm.remove(${daFk.childColumnName})})
+    #set($jt_cm = ${fk.childTable.columnModel.copy()})
+    #set($temp = ${jt_cm.remove(${fk.childColumnName})})
     #set($oc = ${jt_cm.columns.get(0)})
     #set($ot = ${jt_cm.columns.get(0).childForeignKey.masterTable})
   #end  

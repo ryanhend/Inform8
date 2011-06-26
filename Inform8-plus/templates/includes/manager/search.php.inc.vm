@@ -13,7 +13,7 @@
 			<select id="searchfield" name="field" onchange="updateSearch(this.options[this.selectedIndex].value, '<?php echo $quickSearchFormId; ?>')">
 				<option value=""><?php echo WebContext::getLanguage()->get('searchField'); ?></option>
         #foreach( $col in $table.columns )
-          #if(!$col.settings.hasLabel('PASSWORD') && !$col.settings.hasLabel('FILE'))
+          #if(!$col.settings.hasLabel('PASSWORD') && !$col.settings.hasLabel('FILE') && !$col.settings.hasLabel('BLOB'))
             <option value="${table.name}.${col.name}" ><?php echo WebContext::getLanguage()->get('Tbl_${table.name}_${col.name}'); ?></option>
           #end
         #end

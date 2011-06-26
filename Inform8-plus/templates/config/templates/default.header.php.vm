@@ -75,7 +75,7 @@
 <body>
 
 <div id="jack-header" class="jack-header">
-    <div class="jack-header-logo"><img src="images/logo.png" height="40"></div>
+    <div class="jack-header-logo"><img src="images/ap.jpg" height="40"></div>
     <div class="jack-header-searchlogout">
         <a href="#"><?php echo WebContext::getLanguage()->get('help'); ?></a> &nbsp;&nbsp; | &nbsp;&nbsp; 
         <a href="index.php?logout=true"><?php echo WebContext::getLanguage()->get('logout'); ?></a>

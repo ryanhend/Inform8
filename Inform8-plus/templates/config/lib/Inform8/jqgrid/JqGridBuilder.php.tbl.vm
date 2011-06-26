@@ -14,7 +14,7 @@ class ${table.name}JqGridBuilder {
 		'EditButtons'=>'-',
 		'id'=>$obj->get${table.primaryKey.name}()
 		#foreach( $col in $table.columns ) 
-			#if(!${col.settings.hasLabel('hidden')}),
+			#if(!${col.settings.hasLabel('hidden')} && !${col.settings.hasLabel('GRID_HIDE')}),
     			#if($col.childForeignKey) 
 					#if(${col.childForeignKey.masterTable.settings.hasProperty('fkMember')}) #set($cname = ${col.childForeignKey.masterTable.settings.getProperty('fkMember', '')}) #set($fkcol = ${col.childForeignKey.masterTable.getColumn($cname)}) #else #set($fkcol = ${col.childForeignKey.masterTable.primaryKey}) #end
 					'${col.name}'=>$this->buildFkCellValue('${table.name}','${col.childForeignKey.masterTable.name}', '${col.name}', $obj->get${col.name}(), $this->getFkData($obj->get${col.name}AsObject(), '${fkcol.name}'))

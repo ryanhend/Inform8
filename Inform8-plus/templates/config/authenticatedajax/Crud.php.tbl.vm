@@ -9,8 +9,8 @@
 ?><?php
 	
   #macro(getOtherTable $fk) 
-    #set($jt_cm = ${daFk.childTable.columnModel.copy()})
-    #set($temp = ${jt_cm.remove(${daFk.childColumnName})})
+    #set($jt_cm = ${fk.childTable.columnModel.copy()})
+    #set($temp = ${jt_cm.remove(${fk.childColumnName})})
     #set($oc = ${jt_cm.columns.get(0)})
     #set($ot = ${jt_cm.columns.get(0).childForeignKey.masterTable})
   #end
@@ -386,12 +386,12 @@ class ${table.name}Crud {
             #if (!${ot.settings.hasLabel('DB_READ_ONLY')} && !${joinTable.settings.hasLabel('DB_READ_ONLY')})
               
               ## Method to create new record in other table and link via join table
-              #parse('config/ajax/includes//embeddedjoin-create.php.inc.vm')
+              #parse('config/authenticatedajax/includes//embeddedjoin-create.php.inc.vm')
              
               ## Method to link existing data in the other table, and delete the links
               #if($oc.settings.hasLabel('embeddedlinkorjoin'))
-                #parse('config/ajax/includes/embeddedjoin-link.php.inc.vm')
-                #parse('config/ajax/includes/embeddedjoin-delete-link.php.inc.vm')
+                #parse('config/authenticatedajax/includes/embeddedjoin-link.php.inc.vm')
+                #parse('config/authenticatedajax/includes/embeddedjoin-delete-link.php.inc.vm')
               #end        ## Create and delete links
                 
             #end  			
@@ -402,22 +402,11 @@ class ${table.name}Crud {
     		#set($joinTable=${fk.childTable})
 			
     		#if (!${ot.settings.hasLabel('DB_READ_ONLY')})
-              #parse('config/ajax/includes//embeddedother.php.inc.vm')
+              #parse('config/authenticatedajax/includes//embeddedother.php.inc.vm')
             #end			
 			
-    	#end		
-		
-		
-		
-		
-      #if ($fk.childTable.settings.hasLabel('JOIN_TABLE'))
-          #if($fk.otherConnectingTableField().settings.hasLabel('embeddedjoin') 
-            || $fk.otherConnectingTableField().settings.hasLabel('embeddedlinkorjoin'))
-        ## Not Read only on linked tables
-          #end            ## link or join table for FK
-      #else
-        
-      #end
+		#end
+				
     #end        ## End of for each FK        
   #end          ## End has FK's
 }

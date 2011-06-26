@@ -26,7 +26,7 @@
 				$('#<?php echo $pageid ?>-add${fk.childTable.name}Dialog'),
 				'<?php echo $embeddedformid; ?>',
 				window.I8.td['${fk.childTable.name}'],
-				window.I8.td['${fk.otherConnectingTable().name}'],
+				window.I8.td['${ot.name}'],
 				null,
 				'<?php echo $obj->get${table.primaryKey.name}(); ?>',
 				'<?php echo $currfkGridId ?>');

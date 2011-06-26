@@ -12,7 +12,7 @@
   Typically used in a Many to Many relationship.
 *#
 function new${fk.childTable.name}Link() {
-  logToFile("new${fk.childTable.name}Link start");
+  //logToFile("new${fk.childTable.name}Link start");
 
   $otherDao = new ${fk.otherConnectingTable().name}Dao();
   $otherBo = $otherDao->getWithId(Request::getSafeGetOrPost('${fk.otherConnectingTableField().name}'));
@@ -25,7 +25,7 @@ function new${fk.childTable.name}Link() {
   // the newly created object
   $connectingObj->set${fk.otherConnectingTableField().name}($otherBo->getPk());
   
-  logToFile("createEmbedded${fk.childTable.name} end");
+  //logToFile("createEmbedded${fk.childTable.name} end");
   $tempobj = $connectingDao->create($connectingObj);
 
   $res = RequestResult::newFromDbObject($tempobj);
@@ -35,6 +35,6 @@ function new${fk.childTable.name}Link() {
     $res->displayMessage = WebContext::getLanguage()->get('Tbl_${fk.childTable.name}__linkFailed');
   }
   
-  logToFile("new${fk.childTable.name}Link end");
+  //logToFile("new${fk.childTable.name}Link end");
   return $res;
 }

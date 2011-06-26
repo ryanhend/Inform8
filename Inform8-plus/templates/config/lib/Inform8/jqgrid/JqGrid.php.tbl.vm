@@ -29,7 +29,7 @@ class ${table.name}JqGrid {
 		$this->def = new ${table.name}Definition();
 		
 		#foreach($col in $table.columns)
-		  #if(!${col.settings.hasLabel('hidden')})
+		  #if(!${col.settings.hasLabel('hidden')} && !${col.settings.hasLabel('GRID_HIDE')})
 		    $this->cols[] = '${col.name}';
 		  #end
 		#end
@@ -48,7 +48,9 @@ class ${table.name}JqGrid {
 		$ordered = array();
 		if(is_array($objs)) {
     		foreach($objs as $obj) {
-    			${ds}ordered[] = $obj->getColumnname();
+				if (in_array($obj->getColumnname(), $this->cols)) {
+					${ds}ordered[] = $obj->getColumnname();
+				}
     		}
 		}
 		

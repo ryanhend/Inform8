@@ -34,7 +34,7 @@ function newViewField(tableDefinition, tableMember, value, object) {
 	}else if ($.inArray('fileViewAsLink', tableMember.displaySettings.labels) >= 0) {
 		return newFileViewAsLink(tableDefinition, tableMember, value);
 	}else if (tableMember.type == 'varchar') {
-		if ($.inArray('pwd', tableMember.displaySettings.labels) < 0) {
+		if ($.inArray('PASSWORD', tableMember.displaySettings.labels) < 0) {
 			return newTextView(tableDefinition, tableMember, value);
 		}
 	}else if(tableMember.type == 'boolean') {

@@ -14,16 +14,17 @@
 *#
 
 function createEmbedded${fk.childTable.name}() {
-  logToFile("createEmbedded${fk.childTable.name} start");
+  //logToFile("createEmbedded${fk.childTable.name} start");
   $otherDao = new ${fk.childTable.name}Dao();
   $otherBo = new ${fk.childTable.name}();
-    
-  $otherBo->loadFromHttpRequest();
-  $otherBo->set${fk.otherField}(Request::getOrPost('embeddedBaseObjectId'));
-  logToFile("createEmbedded${fk.childTable.name}loadFromHttpRequest");
+  $otherLoader = new ${fk.childTable.name}HttpBuilder();  
+  $otherLoader->loadFromHttpRequest($otherBo);
+  
+  $otherBo->set${fk.childColumnName}(Request::getOrPost('embeddedBaseObjectId'));
+  //logToFile("createEmbedded${fk.childTable.name}loadFromHttpRequest");
   
   $otherBo = $otherDao->create($otherBo);
-  logToFile("createEmbedded${fk.childTable.name} create other");
+  //logToFile("createEmbedded${fk.childTable.name} create other");
   
   #if($fk.childTable.columnsWithLabel('FILE').size() > 0)
     $storageSettingsDao = new StorageDao();
@@ -46,14 +47,22 @@ function createEmbedded${fk.childTable.name}() {
         move_uploaded_file($_FILES['${col.name}']['tmp_name'], $finalStorageFolder . '/' . $_FILES['${col.name}']['name'] );
         $otherBo->set${col.name}('${fk.childTable.name}/' . $otherBo->getPk() . '/' . $_FILES['${col.name}']['name']);
       }
-    #end    
+	#elseif($col.settings.hasLabel('BLOB'))
+      if (isset($_FILES['${col.name}']) 
+        && $_FILES['${col.name}']['name'] != null
+        && $_FILES['${col.name}']['name'] != '') {
+
+		$data = fread(fopen($_FILES['${col.name}']['tmp_name'], "r"), filesize($_FILES['${col.name}']['tmp_name']));
+        $otherBo->set${col.name}($data);
+	  }       
+	#end    
   #end
   $otherBo = $otherDao->save($otherBo);
   
     
   $res = RequestResult::newFromDbObject($otherBo);
   if ($res->isPassed()) {
-    $res->displayMessage = WebContext::getLanguage()g->get('Tbl_${fk.childTable.name}__created');
+    $res->displayMessage = WebContext::getLanguage()->get('Tbl_${fk.childTable.name}__created');
   }else {
     $res->displayMessage = WebContext::getLanguage()->get('Tbl_${fk.childTable.name}__createFailed');
   } 

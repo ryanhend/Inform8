@@ -33,8 +33,11 @@
       <fileset dir="templates"></fileset>
     </copy>
     <copy todir="${dist.folder}/">
-      <fileset dir="build"></fileset>
+      <fileset dir="build/site"></fileset>
     </copy>
+    <copy todir="${dist.folder}/Inform8/">
+      <fileset dir="build/Inform8"></fileset>
+    </copy>  	
     <copy todir="${dist.folder}/Inform8/config">
       <fileset dir="config"></fileset>
     </copy>
