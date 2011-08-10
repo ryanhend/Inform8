@@ -10,38 +10,39 @@
   // site settings + config + seession load
   require_once 'config/settings.php';
 
-	//TODO add checks
-	$reqobj = Request::getOrPost("object");
-	$field = Request::getOrPost("field");
-	$value = Request::getOrPost("value");
-	$expanded = Request::getOrPost("expanded");
+	//TODO add checks to ensure table ok.
+	$reqobj = Request::getSafeGetOrPost("object");
+	$field = Request::getSafeGetOrPost("field");
+	$value = Request::getSafeGetOrPost("value");
+	$fields = Request::getSafeGetOrPost("fields");
 
+	$fieldsArray = array('*');
+	$jsonFieldsArray = NULL;
+	if($fields != NULL && $fields != '') {
+	  $fieldsArray = explode(',', $fields);
+	  $jsonFieldsArray = $fieldsArray;
+	}
+	
 //	print($reqobj);
 //	print($field);	
 //	print($value);	
 	
 	$reqDao = $reqobj."Dao";
+	$reqIql = $reqobj."IQL";
 	$dao = new $reqDao();
 	
 	$reqJsonBuilder = $reqobj."JsonBuilder";
-	$builder = new $reqJsonBuilder();
+	
+	$builder = new $reqJsonBuilder($jsonFieldsArray);
 	
 	if ($field == 'ALL' && $value == 'ALL') {
-		$objs = $dao->getAll();
-	} else {	
-		$objs = IQL::select($reqobj)->where(NULL, $field, '=', $value)->get();
+		$objs = call_user_func($reqIql. '::selectFields', $fieldsArray)->get();
+	} else {
+		$query = call_user_func($reqIql . '::selectFields', $fieldsArray);
+		$objs = $query->where(NULL, $field, '=', $value)->get();
 	}
 	
-	if ($objs != -1) {
-		$objCount = count($objs);
-		for ($i=0; $i < $objCount; $i++) {
-			if ($i>0) echo "\n";
-			$obj = $objs[$i];
-			if ($expanded == '1') {
-				echo $builder->toExpandedJson($obj);
-			}else {
-				echo $builder->toJson($obj);
-			}
-		}
+	if (isset($objs) && is_array($objs)) {
+	  echo $builder->toJson($objs);
 	}
 ?>

@@ -12,7 +12,7 @@
   if (Request::getSafeGetOrPost("logout") == 'true') {
     $authManager->reset();
     header("Location: /");
-    die();
+    exit;
   } 
 	
   if (!$authManager->isAuthenticated()) {

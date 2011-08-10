@@ -14,6 +14,8 @@
     }
   }
 
+  date_default_timezone_set('Australia/Canberra');
+  
   require_once 'StaticConfigClass.php';
   require_once 'lib/Inform8/Inform8Context.php';
   require_once 'lib/Inform8/loadall.php';
@@ -32,6 +34,9 @@
   }
 
   setlocale(LC_ALL, StaticConfig::getLocale());
+
+  //last chance to config anything else.
+  include 'setup.php';
   
   // configure the session
   session_start();
@@ -42,6 +47,5 @@
     require_once 'auth.php';
   }
   
-  // last chance to config anything else.
-  include 'setup.php';
+
 ?>

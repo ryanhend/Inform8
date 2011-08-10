@@ -43,8 +43,10 @@
               </fieldset>
             </form>
             <script type='text/javascript'>
-              var updateCalendarFunction = function() {
-                var tables = "";
+			  var tables = "";
+			  
+			  function updateCalendarTables() {
+			  	tables = "";
                 $('#<?php echo $calendarSelectionId; ?> input[type=checkbox]')
                   .each(function() {
                     if ($(this).is(':checked')) {
@@ -53,9 +55,12 @@
                       }
                       tables += $(this).attr('name');
                     } 
-                  });
-                
-                
+                  });			  
+			  }
+			
+			
+              var updateCalendarFunction = function() {
+                updateCalendarTables();
                 $('#<?php echo $calendarId?>').fullCalendar(
                  'removeEventSource', window.I8.currentCalendarSource
                 );                
@@ -91,9 +96,10 @@
 </table>
 
 <script type='text/javascript'>
-
 	$(document).ready(function() {
-		
+	  	
+		updateCalendarTables();
+	
 		$('#<?php echo $calendarId?>').fullCalendar({
 			header: {
 				left: 'prev,next today',
@@ -102,7 +108,7 @@
 			},
 			editable: true,
 			theme: true,
-			events: "jsoncalendarrest.php?object=ALL",
+			events: "jsoncalendarrest.php?object=" + tables,
 			eventDrop: function(event, delta) {
 				alert('Moving dates not supported yet.');
 			},
@@ -122,6 +128,4 @@
 			height:500
 		});
 	});
-	
-  window.I8.currentCalendarSource = "jsoncalendarrest.php?object=ALL";
 </script>

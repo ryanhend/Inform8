@@ -19,12 +19,13 @@
 	
 	if($tables == 'ALL') {
     $tableCount = count($JACK_TABLE_LIST);
+    
     for ($i = 0; $i < $tableCount; $i++) {
       $table = $JACK_TABLE_LIST[$i];
       //echo $table;
       $reqDef = $table."Definition";
       $def = new $reqDef();
-      if($def->getTable()->getDisplaySettings()->hasLabel('calendar')) {
+      if($def->getTable()->getDisplaySettings()->hasLabel('CALENDAR')) {
         $tableList[] = $def->getTable()->getName();
 	    }
 	  }
@@ -38,7 +39,7 @@
 		//echo $table;
     $reqDef = $table."Definition";
     $def = new $reqDef();
-   	if($def->getTable()->getDisplaySettings()->hasLabel('calendar')) { 
+   	if($def->getTable()->getDisplaySettings()->hasLabel('CALENDAR')) { 
 
 			$members = $def->getTable()->getMembers();
 			$startField = "";
@@ -49,15 +50,15 @@
 			
 			
     	foreach ( $members as $member ) {
-      	if($member->getDisplaySettings()->hasLabel('calendar-start')) {
+      	if($member->getDisplaySettings()->hasLabel('CALENDAR_START')) {
 					$startField = $member->getName();
-       	}else if($member->getDisplaySettings()->hasLabel('calendar-end')) {
+       	}else if($member->getDisplaySettings()->hasLabel('CALENDAR_END')) {
        		$endField = $member->getName();
-       	}else if($member->getDisplaySettings()->hasLabel('calendar-complete')) {
+       	}else if($member->getDisplaySettings()->hasLabel('CALENDAR_COMPLETE')) {
        		$completeField = $member->getName();
-       	}else if($member->getDisplaySettings()->hasLabel('calendar-description')) {
+       	}else if($member->getDisplaySettings()->hasLabel('CALENDAR_DESCRIPTION')) {
        		$descriptionField = $member->getName();
-       	}else if($member->getDisplaySettings()->hasLabel('calendar-title')) {
+       	}else if($member->getDisplaySettings()->hasLabel('CALENDAR_TITLE')) {
        		$titleField = $member->getName();
        	}
 			}
@@ -67,18 +68,24 @@
 			$objs = $dao->getAll();
 			if (!is_null($objs) && $objs != -1) {
 	    	foreach ( $objs as $obj ) {
-	       	$tempEntry = array(
+	    	  
+	    	  $titleMethod  = 'get' . $titleField;
+	    	  $startMethod  = 'get' . $startField;
+	    	 
+	       	  $tempEntry = array(
 						'id' => $obj->getPk(),
-						'title' => $obj->$titleField,
-						'start' => $obj->$startField,
-					  'url' => viewInNewTabJs('Update', $table,  $obj->getPk(), WebContext::getLanguage()->get($table) . ' ' . $obj->getPk()) 
+						'title' => $obj->$titleMethod(),
+						'start' => $obj->$startMethod(),
+					  'url' => Tabs::viewInNewTabJs('Update', $table,  $obj->getPk(), WebContext::getLanguage()->get($table) . ' ' . $obj->getPk()) 
 					);
 					if($endField != NULL) {
-						$tempEntry['end'] = $obj->$endField;
+					    $endMethod  = 'get' . $endField;
+						$tempEntry['end'] = $obj->$endMethod();
 					}
 					$tempClassName = 'cal-'.$def->getTable()->name;
 					if ($completeField != NULL) {
-						if ($obj->$completeField) {
+					    $completeMethod  = 'get' . $completeField();
+						if ($obj->$completeMethod()) {
 							$tempClassName .= ' jack-cal-complete';  
 							$tempEntry['title'] = 'COMPLETE:' . $tempEntry['title'];
 						}else {
@@ -86,18 +93,14 @@
 							$tempEntry['title'] = 'PENDING: ' . $tempEntry['title'];
 						}
 					}
-					if($descriptionField != NULL && $obj->$descriptionField != NULL && $obj->$descriptionField != '') {
-						$tempEntry['description'] = $obj->$descriptionField;
-					}
+					//if($descriptionField != NULL && $obj->$descriptionField != NULL && $obj->$descriptionField != '') {
+					//	$tempEntry['description'] = $obj->$descriptionField;
+					//}
 					$tempEntry['className'] = $tempClassName;
 					$calendarEntries[] = $tempEntry;
 				}
 			}
     }
 	}
-	
-
-	//	$year = date('Y');
-	//	$month = date('m');
 	echo json_encode($calendarEntries);
 ?>

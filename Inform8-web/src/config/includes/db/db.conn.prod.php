@@ -11,5 +11,4 @@
 	}
 	
 	Inform8Context::setDbConnection($mysqli);	
-	mysql_query("SET NAMES 'utf8'");
 ?>

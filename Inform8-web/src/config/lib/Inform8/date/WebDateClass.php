@@ -9,6 +9,8 @@
 
 class WebDate {
 
+  public static $SECONDS_IN_A_DAY = 86400; 
+  
   public static function newMysqlDate() {
     return date("Y-m-d");
   }

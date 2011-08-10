@@ -18,7 +18,20 @@ class Response {
 
   private $feedback = array();
   private $errors = array();
+  
+  private $errorCodes = array();
+  private $feedbackCodes = array();
 
+  private $model;
+
+  public function setModel($model) {
+    $this->model = $model;
+  }
+ 
+  public function getModel() {
+     return $this->model;
+  }  
+  
   public function getError($key) {
     return $this->errors[$key];
   }
@@ -26,6 +39,14 @@ class Response {
   public function addError($key, $value) {
     $this->errors[$key] = $value;
   }
+  
+  public function getErrorCodes() {
+    return $this->errorCodes;
+  }
+
+  public function addErrorCode($value) {
+    $this->errorCodes[] = $value;
+  }  
 
   public function getFeedback($key) {
     return $this->feedback[$key];
@@ -35,6 +56,13 @@ class Response {
     $this->feedback[$key] = $value;
   }
 
+  public function addFeedbackCode($code){
+      $this->feedbackCodes[] = $code;
+  }
+
+  public function getFeedbackCodes(){
+      return $this->feedbackCodes;
+  }
 
   public function getPageTemplate($user) {
     if ($this->template != NULL) {

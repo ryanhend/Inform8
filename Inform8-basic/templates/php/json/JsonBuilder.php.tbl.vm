@@ -21,6 +21,14 @@
  */
 class ${table.name}JsonBuilder { 
   
+  private $fields; 
+  
+  function __construct($fields = NULL) {
+	if($fields != null) {
+	  $this->fields = $fields;
+	}
+  }
+
 
   /**
    * Encodes the supplied object (all the member variables) into a json object.
@@ -50,7 +58,13 @@ class ${table.name}JsonBuilder {
     $objArray = Array();
     $objArray['${table.primaryKey.name}'] = $obj->getPk();
     #foreach( $col in ${table.columns} )
-        $objArray['${col.name}'] = $obj->get${col.name}();
+		
+		if($this->fields == NULL) {
+			$objArray['${col.name}'] = $obj->get${col.name}();
+		}else if(in_array('${col.name}', $this->fields)) {
+			$objArray['${col.name}'] = $obj->get${col.name}();
+		}
+        
     #end
     return $objArray;
   }
