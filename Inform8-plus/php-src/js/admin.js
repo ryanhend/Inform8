@@ -37,12 +37,12 @@ function deleteItem(table, ids, viewId, editId, saveId, deleteId) {
     return false;
   }
 
-  var formdata = 'action=deleteMultiple&object=' + table + '&ids=' + ids;
+  var formdata = 'act=deleteMultiple&obj=' + table + '&ids=' + ids;
   displayTempMessage('<img src="images/loading.gif" /> Deleting item... please wait.', false);
 
   $.ajax( {
     type : "POST",
-    url : "ajax.php",
+    url : "crud.php",
     data : formdata,
     dataType : 'json',
     success : function(data) {
@@ -77,7 +77,7 @@ function populateComboWithFkData(fkOptions, tableMember) {
   $.ajax( {
     type : "POST",
     url : "ajax.php",
-    data : 'action=FkData&object=' + fk.otherTable,
+    data : 'act=FkData&obj=' + fk.otherTable,
     dataType : 'json',
     success : function(data) {
       fkOptions.html("");

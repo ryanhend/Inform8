@@ -77,10 +77,10 @@
 	#if(${joinTable.orderingMember} && !$hideSort)
 	<div class="jack-ui-toolbar-action">
 	  <div class="jack-ui-toolbar-option">
-	    <a href="" onclick="javascript:newTab('ajax.php?action=Order&object=${joinTable.name}', 'Order <?php echo WebContext::getLanguage()->get('Tbl_${theTable.name}'); ?>'); return false;" ><img src="images/smtb/cards.png" /></a>
+	    <a href="" onclick="javascript:newTab('ajax.php?act=Order&obj=${joinTable.name}', 'Order <?php echo WebContext::getLanguage()->get('Tbl_${theTable.name}'); ?>'); return false;" ><img src="images/smtb/cards.png" /></a>
 	  </div>
 	  <div class="jack-ui-toolbar-option">
-	    <a href="" onclick="javascript:newTab('ajax.php?action=Order&object=${joinTable.name}', 'Order <?php echo WebContext::getLanguage()->get('Tbl_${theTable.name}'); ?>'); return false;" ><?php echo WebContext::getLanguage()->get('sort'); ?></a>
+	    <a href="" onclick="javascript:newTab('ajax.php?act=Order&obj=${joinTable.name}', 'Order <?php echo WebContext::getLanguage()->get('Tbl_${theTable.name}'); ?>'); return false;" ><?php echo WebContext::getLanguage()->get('sort'); ?></a>
 	  </div>
 	</div>
 	#end  

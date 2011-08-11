@@ -14,9 +14,9 @@
     }
   }
 
-  date_default_timezone_set('Australia/Canberra');
-  
   require_once 'StaticConfigClass.php';
+  date_default_timezone_set(StaticConfig::getDefaultTimeZone());  
+  
   require_once 'lib/Inform8/Inform8Context.php';
   require_once 'lib/Inform8/loadall.php';
 
@@ -39,6 +39,7 @@
   include 'setup.php';
   
   // configure the session
+  session_set_cookie_params(StaticConfig::getSessionTimeout());
   session_start();
   require_once 'session.php';
 

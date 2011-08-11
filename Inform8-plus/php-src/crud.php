@@ -14,19 +14,20 @@
   if (!$auth) {
       die();
   }
-
-  // TODO Database Checks
+    
   $reqobj = Request::getSafeGetOrPost("obj");
   $action = Request::getSafeGetOrPost("act");
   
-  if($action == 'help') {
-    include ('config/authenticatedajax/help.php');
-  }else if($action == 'home') {
-    include ('config/authenticatedajax/home.php');
-  }else if($action == 'calendar') {
-    include ('config/authenticatedajax/calendar.php');
-  }else {
-    require ('config/authenticatedajax/' . $reqobj . $action . '.php');
+  require ('config/authenticatedajax/crud/' . $reqobj . 'Crud' . '.php');
+  $crudName = $reqobj . 'Crud';
+  $crud = new $crudName(WebContext::getLanguage());
+  $res = $crud->$action();
+  
+  $wrapWithTa = Request::getSafeGetOrPost("wta");
+  if ($wrapWithTa == 1) {
+    echo '<textarea>' . json_encode($res) . '</textarea>';
+  }else{
+    echo json_encode($res);
   }
   
 ?>

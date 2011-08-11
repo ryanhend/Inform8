@@ -8,29 +8,29 @@
  */
 ?><?php
     
-    require_once 'config/lib/Inform8/ajax/OperationResult.php';
-    require_once 'config/lib/Inform8/ajax/RequestResult.php';
-    require_once 'config/lib/Inform8/displaysettings/DisplaySettings.php';
-    require_once 'config/lib/Inform8/help/Help.php';
-    require_once 'config/lib/Inform8/jqtabs/Tabs.php';
+    require_once 'ajax/OperationResult.php';
+    require_once 'ajax/RequestResult.php';
+    require_once 'displaysettings/DisplaySettings.php';
+    require_once 'help/Help.php';
+    require_once 'jqtabs/Tabs.php';
 
-    require_once 'config/lib/Inform8/web/PlusPreProcessor.php';
+    require_once 'web/PlusPreProcessor.php';
     
-    require_once 'config/lib/Inform8/tabledef/FieldTypes.php';
-    require_once 'config/lib/Inform8/tabledef/Table.php';
-    require_once 'config/lib/Inform8/tabledef/TableDisplaySettings.php';
-    require_once 'config/lib/Inform8/tabledef/TableMember.php';
-    require_once 'config/lib/Inform8/tabledef/TableMemberDisplaySettings.php';
-    require_once 'config/lib/Inform8/tabledef/TableMemberForeignKey.php';
+    require_once 'tabledef/FieldTypes.php';
+    require_once 'tabledef/Table.php';
+    require_once 'tabledef/TableDisplaySettings.php';
+    require_once 'tabledef/TableMember.php';
+    require_once 'tabledef/TableMemberDisplaySettings.php';
+    require_once 'tabledef/TableMemberForeignKey.php';
     
 
 $classLookup = Inform8Context::getClassRegistry();
 #foreach( $table in $tables )
-    $classLookup->registerClass('${table.name}HttpBuilder', 'config/lib/Inform8/http/${table.name}HttpBuilder.php');
-    $classLookup->registerClass('${table.name}JqGridBuilder', 'config/lib/Inform8/jqgrid/${table.name}JqGridBuilder.php');
-	$classLookup->registerClass('${table.name}JqGrid', 'config/lib/Inform8/jqgrid/${table.name}JqGrid.php');
-    $classLookup->registerClass('${table.name}Definition', 'config/lib/Inform8/dao/${table.name}Def.php');
-    $classLookup->registerClass('${table.name}ExcelBuilder', 'config/lib/Inform8/rest/${table.name}ExcelBuilder.php');
-    $classLookup->registerClass('${table.name}FkDataBuilder', 'config/lib/Inform8/fk/${table.name}FkDataBuilder.php');
+    $classLookup->registerClass('${table.name}HttpBuilder', 'lib/Inform8/http/${table.name}HttpBuilder.php');
+    $classLookup->registerClass('${table.name}JqGridBuilder', 'lib/Inform8/jqgrid/${table.name}JqGridBuilder.php');
+	$classLookup->registerClass('${table.name}JqGrid', 'lib/Inform8/jqgrid/${table.name}JqGrid.php');
+    $classLookup->registerClass('${table.name}Definition', 'lib/Inform8/dao/${table.name}Def.php');
+    $classLookup->registerClass('${table.name}ExcelBuilder', 'lib/Inform8/rest/${table.name}ExcelBuilder.php');
+    $classLookup->registerClass('${table.name}FkDataBuilder', 'lib/Inform8/fk/${table.name}FkDataBuilder.php');
 #end
 ?>

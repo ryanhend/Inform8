@@ -6,6 +6,7 @@ RewriteRule error$ error.php [L,S=1]
 RewriteRule error.php$ error.php [L]
 
 RewriteRule ajax.php$ ajax.php [L]
+RewriteRule crud.php$ crud.php [L]
 
 RewriteRule logout$ index.php?logout=true [NC]
 

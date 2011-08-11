@@ -339,6 +339,7 @@ function submitForm(submitOptions) {
 function buildViewForm(tableDefinition, object, panel) {
 	var viewContent = $('<div />').addClass('jack-createviewupdate-view');
 	var id = object[tableDefinition.primaryKey.name];
+	var formContent = newForm(formId, "update", tableDefinition.name, id);
 	
 	newIdLabel(tableDefinition, tableDefinition.primaryKey, id).appendTo(viewContent);
 	buildViewFields(tableDefinition, object, viewContent);

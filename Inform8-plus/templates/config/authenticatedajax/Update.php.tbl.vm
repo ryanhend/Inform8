@@ -25,7 +25,7 @@
 	
 	//load
 	$obj = $dao->get($id);
-  if (is_null($obj) || (!is_object($obj) && $obj == -1) ) {
+    if (is_null($obj) || (!is_object($obj) && $obj == -1) ) {
 		echo '${table.name} record not found';
 		die;
 	}	
@@ -110,14 +110,13 @@
             success: function(data){
           		buildViewForm(
   							window.I8.td['${table.name}'], 
-  							data, 
-  							$('#<?php echo $viewsectionid ?> #view')
-							);
+  							data[0],
+  							$('#<?php echo $viewsectionid ?> #view'));
 							
 							#if(!${table.settings.hasLabel('UI_READ_ONLY')} && !${table.settings.hasLabel('DB_READ_ONLY')})
   							buildEditForm(
   								window.I8.td['${table.name}'], 
-  								data, 
+  								data[0], 
   								$('#<?php echo $editsectionid ?>'), 
   								$('#<?php echo $viewsectionid ?> #view'),
   								'<?php echo $formid; ?>'

@@ -68,10 +68,10 @@
 	</style>
 	
   <div id="jack-goog-menu" class="goog-toolbar">
-  	<div id="jackmenu-home" class="goog-toolbar-button jack-menu-home"><a href="#" onclick="javascript:newTab('ajax.php?action=home', '<?php echo WebContext::getLanguage()->get('homeTab'); ?>'); return false;"><img src="images/smtb/home.png" /></a></div>
+  	<div id="jackmenu-home" class="goog-toolbar-button jack-menu-home"><a href="#" onclick="javascript:newTab('ajax.php?act=home', '<?php echo WebContext::getLanguage()->get('homeTab'); ?>'); return false;"><img src="images/smtb/home.png" /></a></div>
 	<hr>
 	#if(${config.getAllProperties().getProperty('calendar.on', 'true')} == true)
-		<div id="jackmenu-calendar" class="goog-toolbar-button jack-menu-calendar"><a href="#" onclick="javascript:newTab('ajax.php?action=calendar', '<?php echo WebContext::getLanguage()->get('calendarTab'); ?>'); return false;"><img src="images/smtb/calendar.png" /></a></div>
+		<div id="jackmenu-calendar" class="goog-toolbar-button jack-menu-calendar"><a href="#" onclick="javascript:newTab('ajax.php?act=calendar', '<?php echo WebContext::getLanguage()->get('calendarTab'); ?>'); return false;"><img src="images/smtb/calendar.png" /></a></div>
 		<hr>
 	#end			
 			
@@ -81,7 +81,7 @@
 	  		#if ($menu.subMenus)
 					<div class="goog-menu">
 	        #foreach( $subMenu in $menu.subMenus )
-	          	<div class="goog-menuitem jack-menu-item" onclick="javascript:selectOrCreateTab('ajax.php?action=Manager&object=${subMenu.name}', '<?php echo WebContext::getLanguage()->get('Tbl_${subMenu.name}__tab'); ?>'); return false;">
+	          	<div class="goog-menuitem jack-menu-item" onclick="javascript:selectOrCreateTab('ajax.php?act=Manager&obj=${subMenu.name}', '<?php echo WebContext::getLanguage()->get('Tbl_${subMenu.name}__tab'); ?>'); return false;">
 	      			<a href="#" ><?php echo WebContext::getLanguage()->get('SubMenu_${subMenu.name}'); ?></a>
 	      		</div>
 	        #end

@@ -20,13 +20,13 @@
         		  #if ($menu.subMenus)
         		    <ul>
         			  #foreach( $subMenu in $menu.subMenus )
-        			    <li><a href="#" onclick="javascript:selectOrCreateTab('ajax.php?action=Manager&object=${subMenu.name}', '<?php echo WebContext::getLanguage()->get('Tbl_${subMenu.name}__tab'); ?>'); return false;"><?php echo WebContext::getLanguage()->get('SubMenu_${subMenu.name}'); ?></a></li>
+        			    <li><a href="#" onclick="javascript:selectOrCreateTab('ajax.php?act=Manager&obj=${subMenu.name}', '<?php echo WebContext::getLanguage()->get('Tbl_${subMenu.name}__tab'); ?>'); return false;"><?php echo WebContext::getLanguage()->get('SubMenu_${subMenu.name}'); ?></a></li>
         			  #end
         		    </ul>	
         		  #end
         		</li>
         	#end
-        	<li><a href="#" onclick="javascript:selectOrCreateTab('ajax.php?action=home', '<?php echo WebContext::getLanguage()->get('Home__tab'); ?>'); return false;"><?php echo WebContext::getLanguage()->get('home'); ?></a></li>
+        	<li><a href="#" onclick="javascript:selectOrCreateTab('ajax.php?act=home', '<?php echo WebContext::getLanguage()->get('Home__tab'); ?>'); return false;"><?php echo WebContext::getLanguage()->get('home'); ?></a></li>
           <li><a href="index.php?logout=true"><?php echo WebContext::getLanguage()->get('logout'); ?></a></li>
         </ul>
     </div>

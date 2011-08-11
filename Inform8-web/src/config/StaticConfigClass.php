@@ -16,7 +16,32 @@ class StaticConfig {
     return 'Inform8';
   }
 
+  
+  public static function getServerAddress() {
+    return 'http://yourserver.com';
+  }  
 
+  
+  public static function getStorageLocation() {
+    return '/folderToWebFiles/';
+  }
+  
+  
+  public static function getApplicationBasePath() {
+    return '/folderToWebApp/';
+  }
+  
+  
+  public static function getSessionTimeout() {
+    return 300;
+  }
+
+  
+  public static function getDefaultTimeZone() {
+    return 'Australia/Canberra';
+  }
+  
+  
   /**
    * Request pre-processor - run for every request to setup.
    * @see RequestPreProcessor
@@ -39,19 +64,17 @@ class StaticConfig {
     return new Inform8UserAuthenticate();
   }
 
+  
   public static function getDefaultController() {
     return new SimpleFileController();
   }
 
+  
   /**
    * The email any site errors go to.
    */
   public static function getAdministratorEmail() {
     return 'admin@yourdoman.com';
-  }
-
-  public static function getStorageLocation() {
-    return '/folderToWebFiles/';
   }
 
 
@@ -73,6 +96,9 @@ class StaticConfig {
     }
   }
 
+  /**
+   * If the login username should be in email format.
+   */
   function isLoginEmailFormat() {
     return false;
   }
@@ -96,17 +122,20 @@ class StaticConfig {
   public static function getLoginProcessor() {
     return new NullLoginProcessor();
   }
+  
 
   /** Google analytics code.. optional */
   public static function getGoogleAnalyticsCode() {
     return NULL;
   }
 
+  
   /** Google analytics domain.. optional */
   public static function getGoogleAnalyticsDomain() {
     return NULL;
   }
 
+  
   public static function getStreamedContentLocalFolder() {
     return '';
   }

@@ -74,7 +74,7 @@
         ${ds}.ajax({
           type: "POST",
           url: "ajax.php",
-          data: "action=Order&object=${table.name}&parentId=" + pid,
+          data: "act=Order&obj=${table.name}&parentId=" + pid,
           dataType: 'html', 
           success: function(data){
             $("#<?php echo $pageid ?>").html(data);               
@@ -108,10 +108,10 @@
           $("#<?php echo $orderItemsId ?>").sortable({
             update : function () {
               displayTempMessage('<img src="images/loading.gif" /> ' + getLanguageEntry('Tbl_${table.name}__ordering'), true);
-              formdata = $("#<?php echo $orderItemsId ?>").sortable('serialize') + "&object=${table.name}&action=order" ;
+              formdata = $("#<?php echo $orderItemsId ?>").sortable('serialize') + "&obj=${table.name}&act=order" ;
               ${ds}.ajax({
                 type: "POST",
-                url: "ajax.php",
+                url: "crud.php",
                 data: formdata,
                 dataType: 'json', 
                 error: function(req, stat, error){

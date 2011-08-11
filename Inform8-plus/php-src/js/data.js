@@ -14,7 +14,7 @@ function getFkData(fk, table, tableMember, callback) {
 	$.ajax({
 	   	type: "POST",
 	    url: "ajax.php",
-	    data: 'action=FkData&object=' + fk.otherTable,
+	    data: 'act=FkData&obj=' + fk.otherTable,
 			dataType: 'json',
 	    success: function(data) {
 				var id = table.name + "_" + tableMember.name + "__" + fk.otherTable + "_" + fk.otherField;

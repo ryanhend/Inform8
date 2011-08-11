@@ -56,7 +56,7 @@ function loadGrid(gridId, quickEditId, toolbarId, quickSearchFormId, xhr, tableD
 		quickEdit = " <a href='#' title='Quick Edit'  " +
 			"onclick=\"buildQuickEditPanel('" + gridId + "', '" + cl + 
 			"', window.I8.td." + tableDef.name +", '#" + quickEditId + "' ); return false;\" ><img src='images/smtb/edit.jpg' /></a>"; 
-		fullEdit = " <a href='#' title='View/Edit in a new tab' onclick=\"newTab('ajax.php?action=Update&object=" + tableDef.name + "&id="+cl+"', '" + getLanguageEntry('Tbl_' + tableDef.name) + " " + cl + "'); return false;\" ><img src='images/smtb/advedit.jpg' /></a>";				
+		fullEdit = " <a href='#' title='View/Edit in a new tab' onclick=\"newTab('ajax.php?act=Update&obj=" + tableDef.name + "&id="+cl+"', '" + getLanguageEntry('Tbl_' + tableDef.name) + " " + cl + "'); return false;\" ><img src='images/smtb/advedit.jpg' /></a>";				
 		$("#" + gridId).jqGrid('setRowData',ids[i],{EditButtons:quickEdit+fullEdit});
 	}
 

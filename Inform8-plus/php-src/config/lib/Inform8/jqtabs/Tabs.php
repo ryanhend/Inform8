@@ -4,8 +4,8 @@ class Tabs {
     public static function viewInTab($action, $object, $id, $linkText, $tabTitle) {
         return '<a href="" ' .
         'onclick="javascript:updateTab(\'ajax.php? ' .
-        'action=' . $action .
-        '&object=' . $object .
+        'act=' . $action .
+        '&obj=' . $object .
         '&id=' . $id .
         '\', \'' . $tabTitle . '\'); return false;">' . $linkText . '</a>';
     
@@ -19,8 +19,8 @@ class Tabs {
     
     public static function viewInNewTabJs($action, $object, $id, $tabTitle) {
         return 'javascript:newTab(\'ajax.php? ' .
-        'action=' . $action .
-        '&object=' . $object .
+        'act=' . $action .
+        '&obj=' . $object .
         '&id=' . $id .
         '\', \'' . $tabTitle . '\');';
     

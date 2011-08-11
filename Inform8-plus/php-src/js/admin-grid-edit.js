@@ -17,7 +17,7 @@ function create(formdata, tableName, dacallback) {
   displayTempMessage('<img src="images/loading.gif" class="feeback-loading-img" /> Creating ' + tableName + '... please wait.', false);
   $.ajax( {
     type : "POST",
-    url : "ajax.php",
+    url : "crud.php",
     data : formdata,
     dataType : 'json',
     success : function(data) {
@@ -33,7 +33,7 @@ function create(formdata, tableName, dacallback) {
 
 function enableSelected(table, enable, gridId, enableColumn) {
   var ids = jQuery("#" + gridId).jqGrid('getGridParam', 'selarrrow');
-  var formdata = 'action=enableMultiple&object=' + table + '&ids=' + ids + '&enable=' + enable;
+  var formdata = 'act=enableMultiple&obj=' + table + '&ids=' + ids + '&enable=' + enable;
 
   if (enable) {
     displayTempMessage('<img src="images/loading.gif" /> Enabling items... please wait.', false);
@@ -43,7 +43,7 @@ function enableSelected(table, enable, gridId, enableColumn) {
 
   $.ajax( {
     type : "POST",
-    url : "ajax.php",
+    url : "crud.php",
     data : formdata,
     dataType : 'json',
     success : function(data) {
@@ -72,12 +72,12 @@ function deleteSelected(table, gridId) {
   }
 
   var ids = jQuery("#" + gridId).jqGrid('getGridParam', 'selarrrow');
-  var formdata = 'action=deleteMultiple&object=' + table + '&ids=' + ids;
+  var formdata = 'act=deleteMultiple&obj=' + table + '&ids=' + ids;
   displayTempMessage('<img src="images/loading.gif" /> Deleting items... please wait.', false);
 
   $.ajax( {
     type : "POST",
-    url : "ajax.php",
+    url : "crud.php",
     data : formdata,
     dataType : 'json',
     success : function(data) {
@@ -104,12 +104,12 @@ function deleteSelectedLinks(objId, objTable, linkedTable, gridId) {
   }
 
   var ids = jQuery("#" + gridId).jqGrid('getGridParam', 'selarrrow');
-  var formdata = 'action=deleteMultiple' + linkedTable + 'Links&objId=' + objId + '&object=' + objTable + '&linkedIds=' + ids;
+  var formdata = 'act=deleteMultiple' + linkedTable + 'Links&objId=' + objId + '&obj=' + objTable + '&linkedIds=' + ids;
   displayTempMessage('<img src="images/loading.gif" /> Deleting items... please wait.', false);
 
   $.ajax( {
     type : "POST",
-    url : "ajax.php",
+    url : "crud.php",
     data : formdata,
     dataType : 'json',
     success : function(data) {

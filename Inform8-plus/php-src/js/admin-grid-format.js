@@ -13,7 +13,7 @@
 function formatTableLink(cellvalue, options, rowObject) {
 	var daCell = $.parseJSON(cellvalue);
 	return "<a class=\"aunderline\" href=\"#\" " +
-	  "onclick=\"newTab('ajax.php?action=Update&object=" + daCell.otbl + 
+	  "onclick=\"newTab('ajax.php?act=Update&obj=" + daCell.otbl + 
 	  "&id=" + daCell.lval + "', '" + getLanguageEntry('Tbl_' + daCell.otbl) + 
 	  " " + daCell.lval + "'); return false;\">" + daCell.dval + "</a>";
 }

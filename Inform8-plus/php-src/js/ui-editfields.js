@@ -83,6 +83,7 @@ function buildFields(tableDefinition, object, formContent, testDisplayinGrid, ig
 
 function newEditFieldBlock(theTable, theFieldDefinition, daField) {
 	var wrapper = newWrapper();
+	
 	newLabel(theTable, theFieldDefinition, true).appendTo(wrapper);
 	daField.appendTo(newFieldWrapper().appendTo(wrapper));
 	newClearLeft().appendTo(wrapper);

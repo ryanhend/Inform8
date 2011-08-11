@@ -94,7 +94,7 @@ function buildEmbeddedLinkForm(title, tableDefinition, panel, formId, otherTable
       displayTempMessage('<img src="images/loading.gif" /> ' + getLanguageEntry('Tbl_' + otherTableDefinition.name + '__linking'), false);
       $.ajax( {
         type : "POST",
-        url : "ajax.php",
+        url : "crud.php",
         data : formdata,
         dataType : 'json',
         success : function(data) {

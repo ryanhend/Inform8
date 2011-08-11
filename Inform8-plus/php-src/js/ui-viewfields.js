@@ -139,12 +139,10 @@ function newIntView(theTable, theFieldDefinition, value, object) {
 		var daField = $('<div />').attr('name', theFieldDefinition.name).attr('id', theTable.name + '-' + theFieldDefinition.name);
 		var title = getLanguageEntry('Tbl_' + theFieldDefinition.foriegnKey.otherTable) + " " + value;
 
-		console.log('javascript:newTab("ajax.php?action=Update&object='+theFieldDefinition.foriegnKey.otherTable+'&id='+value+'", "' + title + '"); return false;');
-		
 		$('<a />').attr('href', '#')
 			.text(theobj[fkField])
 			.click(function () {
-				newTab('ajax.php?action=Update&object=' + theFieldDefinition.foriegnKey.otherTable + '&id=' + value,  title); 
+				newTab('ajax.php?act=Update&obj=' + theFieldDefinition.foriegnKey.otherTable + '&id=' + value,  title); 
 				return false; 
 			})
 			.appendTo(daField);
