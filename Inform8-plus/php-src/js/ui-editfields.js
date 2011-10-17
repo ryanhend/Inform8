@@ -35,7 +35,7 @@ function buildFields(tableDefinition, object, formContent, testDisplayinGrid, ig
 						res.appendTo(formContent);
 					}
 				}
-			}else if ($.inArray('readonlyedit', theMember.displaySettings.labels) >= 0 &&
+			}else if ($.inArray('DB_READ_ONLY', theMember.displaySettings.labels) >= 0 &&
 				(formtype == 'quick-update' || formtype == 'update')) {
 				newViewField(tableDefinition, theMember, daValue, object).appendTo(formContent);
 			}else if ($.inArray('FILE', theMember.displaySettings.labels) >= 0) {
@@ -70,7 +70,7 @@ function buildFields(tableDefinition, object, formContent, testDisplayinGrid, ig
 			}else if(theMember.type == 'datetime') {
 				newDateTimeInput(tableDefinition, theMember, daValue).appendTo(formContent);				
 			}else {
-				if ($.inArray('creation-dbcreate', theMember.displaySettings.labels) < 0) {
+				if ($.inArray('DB_READ_ONLY', theMember.displaySettings.labels) < 0) {
 					newTextInput(tableDefinition, theMember, daValue).appendTo(formContent);
 				}
 			}	
@@ -226,36 +226,37 @@ function newFkIntInput(theTable, theFieldDefinition, value) {
 	var fkid = theTable.name + "_" + theFieldDefinition.name + "__" + theFieldDefinition.foriegnKey.otherTable + "_" + theFieldDefinition.foriegnKey.otherField;
 	var updateFunction = function() {
 			daField.html('');
-			
 			if ($.inArray('NOT_NULL', theFieldDefinition.displaySettings.labels) < 0) {
 				var option = $('<option />');
 				option.appendTo(daField);
 			}
-			
 			var options = window.I8.fkdata[fkid];
 			for(idx in options) {
-				var option = $('<option />').attr('value', options[idx].id).text(options[idx].val)
+			  
+			  if(options[idx].val == null) {
+				  var option = $('<option />').attr('value', options[idx].id).text('Id: ' + options[idx].id);  
+				}else {
+				  var option = $('<option />').attr('value', options[idx].id).text(options[idx].val);
+				}
+			  
 				if (options[idx].id == value) {
 					option.attr('selected', true);
 				}
-				option.appendTo(daField);	
+				option.appendTo(daField);
 			}
 			return false;
 	};
-
 	if (window.I8.fkdata[fkid] === undefined) {
 		getFkData(theFieldDefinition.foriegnKey, theTable, theFieldDefinition, updateFunction);
 	}else {
 		updateFunction();
 	}
-
 	var refresh = $('<a />').addClass('jk-fkrefresh').attr('href', '#').text('refresh').click(function() {
 		daField.html('');
 		$('<option />').text(getLanguageEntry('refreshing')).appendTo(daField);
 		getFkData(theFieldDefinition.foriegnKey, theTable, theFieldDefinition, updateFunction)
 	});
 	var daFieldWrapepr = $('<div />').append(daField).append(refresh);
-	
 	return newEditFieldBlock(theTable, theFieldDefinition, daFieldWrapepr);
 }
 
@@ -374,6 +375,9 @@ function newDateInput(theTable, theFieldDefinition, value){
 	daPickerField.appendTo(daField);
 	
 	daPickerField.datepicker({altFormat: 'yy-mm-dd', altField: '#'+millis + '-' + theTable.name + '-' + theFieldDefinition.name, dateFormat: 'dd-mm-yy', buttonImage: 'images/calendar.png' });
+	daPickerField.change(function(){
+	  if (!$(this).val()) $("#"+millis + '-' + theTable.name + '-' + theFieldDefinition.name).val('');
+	});
 
 	return newEditFieldBlock(theTable, theFieldDefinition, daField);
 }

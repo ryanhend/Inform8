@@ -1,0 +1,45 @@
+<project name="Local Website" default="localDeploy" basedir=".">
+
+	<property file="build.properties" />
+	<property file="users/${user.name}/local.properties" />
+
+	<target name="init">
+	</target>
+	
+	
+	<target name="_checkLocalDeploySetup" unless="local.web.folder">
+		<echo message="*****************************************************************" />
+		<echo message="IMPORTANT: Please Complete Local Configuration Steps" />
+		<echo message="Local Deployment Failed" />
+		<echo message="*****************************************************************" />
+	</target>
+
+	
+    <target name="_localDeploy" if="local.web.folder">
+    	<echo message="Deploying to Local Folder" />
+        <copy todir="${local.web.folder}" overwrite="true">
+            <fileset dir="site/" includes="**">
+            </fileset>
+        </copy>
+    	
+		<concat destfile="${local.web.folder}/.htaccess">
+			<fileset dir="config/local/" includes="htaccess-start" />
+			<fileset dir="site/" includes=".htaccess" />
+		</concat>
+    	
+		
+    	<echo message="Deploying Local DB connection file for ${user.name}" />
+    	<copy file="users/${user.name}/my.conn.php" 
+			tofile="${local.web.folder}/config/includes/my.conn.1.php" overwrite="true" />
+    	
+    	<echo message="Deployment Complete" />
+    </target>
+	
+    <target name="localDeploy" depends="init,_checkLocalDeploySetup,_localDeploy">
+    </target>
+	
+    <target name="gen">
+    	<ant dir="../Inform8" />
+    </target>
+
+</project>

@@ -9,6 +9,12 @@
 
 	<?php 
 		$grid = new ${theTable.name}JqGrid($currfkGridId, $currfkQuickEditId, $currfkGridTempToolbarId, $currfkGridPagerId, '');
+	
+		#if($fk.childTable.settings.hasLabel('JOIN_TABLE'))
+			$grid->setJoin('${fk.childTable.name}', '${fk.childColumnName}', '${theTable.primaryKey.name}', $obj);
+		#else
+			$grid->setFkJoin('${fk.childTable.name}', '${fk.childColumnName}', $obj);
+		#end
 		echo $grid->toString(); 
 	?>	
 	

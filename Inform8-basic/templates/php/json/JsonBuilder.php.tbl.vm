@@ -78,6 +78,22 @@ class ${table.name}JsonBuilder {
    * @return String The JSON string representing this object and all directly(1-1 cardinality) linked objects
    */
   public function toExpandedJson($obj) {
+  
+	if(is_array($obj)) {
+		$arrayObjs = array();
+		foreach($obj as $o) {
+			${ds}arrayObjs[] = $this->_toExpandedJson($o);
+		}
+		return json_encode($arrayObjs);
+	}else if(is_object($obj)) {
+        $objArray = $this->_toExpandedJson($obj);
+        return json_encode($objArray);  
+	}
+	return null;  
+  }
+  
+  
+  private function _toExpandedJson($obj) {
     // basic fields
     $objArray = $this->getBaseFieldArray($obj);
     #foreach( $col in ${table.columns} )
@@ -106,9 +122,10 @@ class ${table.name}JsonBuilder {
             }
             $objArray['${daFk.childTable.name}ObjectsVia${daFk.childColumnName}'] = $theObjsArray;
         #end
-    #end
-    return json_encode($objArray);
+	#end
+	return $objArray;
   }
+  
 
 }    
 ?>

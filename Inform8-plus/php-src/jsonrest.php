@@ -15,6 +15,7 @@
 	$field = Request::getSafeGetOrPost("field");
 	$value = Request::getSafeGetOrPost("value");
 	$fields = Request::getSafeGetOrPost("fields");
+    $expanded = Request::getSafeGetOrPost("expanded");
 
 	$fieldsArray = array('*');
 	$jsonFieldsArray = NULL;
@@ -43,6 +44,10 @@
 	}
 	
 	if (isset($objs) && is_array($objs)) {
-	  echo $builder->toJson($objs);
+	  if($expanded) {
+	    echo $builder->toExpandedJson($objs);
+	  }else {
+	    echo $builder->toJson($objs);
+	  }
 	}
 ?>

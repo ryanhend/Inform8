@@ -51,9 +51,13 @@
 	$reqBuilder = $reqobj."JqGridBuilder";
 	$builder = new $reqBuilder();
 
-	$joinTable = Request::getOrPost('joinTable');
-	$joinField = Request::getOrPost('joinField');
-	$otherJoinField = Request::getOrPost('otherJoinField');
+	$joinTable = Request::getSafeGetOrPost('joinTable');
+	$joinField = Request::getSafeGetOrPost('joinField');
+	$otherJoinField = Request::getSafeGetOrPost('otherJoinField');
+	
+    Inform8Context::getLogger()->log(0, 'jt:' . $joinTable);
+    Inform8Context::getLogger()->log(0, 'jf:' . $joinField);
+    Inform8Context::getLogger()->log(0, 'ojf:' . $otherJoinField);
 	
 	$totalCount = 0;
 	if ($field == 'ALL' && $value == 'ALL') {
@@ -65,20 +69,22 @@
 			$totalPages = 0; 
 		} 
 	}else {
-		//print"getWhere $field - $value - $searchOption";
-		
-		if ($joinTable != null) {
-			$reqJoinDao = $joinTable."Dao";
-			$joinDao = new $reqJoinDao();
-			$joinobs = $joinDao->getWhere(array($joinField), array($value), $searchOption, $limit, $start, $sidx, $sord);
-			$totalCount = $joinDao->getWhereCount(array($joinField), array($value), $searchOption);
+	  Inform8Context::getLogger()->log(0, 'jt:' . $joinTable);
+		if ($joinTable != null && $joinTable != '') {
+			$reqJoinIql = $joinTable."IQL";
+			
+			$joinobs = IQL::select($joinTable, array('*'))->where(null, $joinField, '=', $value)
+			  ->start($start)->limit($limit)->get();
+			  
+			$totalCount = IQL::count($joinTable, '*')->where(null, $joinField, '=', $value)->get();
+			
 			if( $totalCount >0 ) { 
 				$totalPages = ceil($totalCount/$limit); 
 			} else { 
 				$totalPages = 0; 
 			} 			
 			$objs = array();
-			$accesor = 'get'.$otherJoinField.'Object';
+			$accesor = 'get'.$otherJoinField.'AsObject';
 			if($joinobs != -1) {
 					foreach($joinobs as $join) {
 						$objs[] = $join->$accesor();

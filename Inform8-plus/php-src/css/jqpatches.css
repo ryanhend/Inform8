@@ -112,4 +112,6 @@ div .goog-toolbar {
 }
 
 
-	
+.ui-jqgrid tr.jqgrow td {
+	padding: 4px;
+}

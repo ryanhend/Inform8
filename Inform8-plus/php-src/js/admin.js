@@ -77,7 +77,7 @@ function populateComboWithFkData(fkOptions, tableMember) {
   $.ajax( {
     type : "POST",
     url : "ajax.php",
-    data : 'act=FkData&obj=' + fk.otherTable,
+    data : 'pkg=fkdata&call=' + fk.otherTable + 'FkData',
     dataType : 'json',
     success : function(data) {
       fkOptions.html("");

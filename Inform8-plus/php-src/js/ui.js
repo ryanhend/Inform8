@@ -20,13 +20,12 @@ function sortByRenderSettings(a,b) {
 function orderColumns(tableDefinition) {
 	
 	ordered = new Array();
-	
+
 	if (tableDefinition.rendersettings != null) {
 		tableDefinition.rendersettings.sort(sortByRenderSettings);	
 	}else {
 		tableDefinition.rendersettings = new Array();
 	}
-	
 	
 	for (i=0; i < tableDefinition.rendersettings.length; i++) {
 		ordered.push(tableDefinition.members[tableDefinition.rendersettings[i].Columnname]);
@@ -44,6 +43,7 @@ function orderColumns(tableDefinition) {
 			ordered.push(mem);	
 		}
 	}
+	
 	return ordered;
 }
 

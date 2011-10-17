@@ -264,7 +264,7 @@ function buildCreateFormInDialog(tableDefinition, dialog, gridId) {
 }
 
 function configureIFrameForm(submitOptions) {
-	submitOptions.formContent.attr('action', 'ajax.php');
+	submitOptions.formContent.attr('action', 'crud.php');
 	submitOptions.formContent.attr('enctype', 'multipart/form-data');
 	submitOptions.formContent.attr('method', 'POST');
 	submitOptions.formContent.append(
@@ -312,7 +312,7 @@ function submitForm(submitOptions) {
 	}
 	$.ajax({
 	  	type: "POST",
-	    url: "ajax.php",
+	    url: "crud.php",
 	    data: submitOptions.formdata,
 	    dataType: 'json',
 	    success: function(data){
@@ -339,7 +339,6 @@ function submitForm(submitOptions) {
 function buildViewForm(tableDefinition, object, panel) {
 	var viewContent = $('<div />').addClass('jack-createviewupdate-view');
 	var id = object[tableDefinition.primaryKey.name];
-	var formContent = newForm(formId, "update", tableDefinition.name, id);
 	
 	newIdLabel(tableDefinition, tableDefinition.primaryKey, id).appendTo(viewContent);
 	buildViewFields(tableDefinition, object, viewContent);
@@ -351,9 +350,9 @@ function buildViewForm(tableDefinition, object, panel) {
 function newForm(formId, action, object, id) {
 	var formContent = $('<form />').attr('id', formId);
 	//set the object
-	$('<input />').attr("type", "hidden").attr("name", "jackaction").attr("value",action).appendTo(formContent);
+	$('<input />').attr("type", "hidden").attr("name", "act").attr("value",action).appendTo(formContent);
 	//set the action
-	$('<input />').attr("type", "hidden").attr("name", "object").attr("value",object).appendTo(formContent);
+	$('<input />').attr("type", "hidden").attr("name", "obj").attr("value",object).appendTo(formContent);
 	if (id!=null) {
 		$('<input />').attr("type", "hidden").attr("name", "id").attr("value",id).appendTo(formContent);
 	}

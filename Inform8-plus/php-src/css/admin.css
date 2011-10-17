@@ -75,6 +75,9 @@ body {
 .jack-ui-layout-content1 {
 }
 
+.grid-data {
+	overflow: hidden;
+}
 
 /******************************	
 *	  JACK-HEADER  				      *

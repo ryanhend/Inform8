@@ -20,7 +20,7 @@
     </div>
     #if(${config.getAllProperties().getProperty('calendar.on', 'true')} == true)
     <div id="tab-cal">
-        <?php include 'config/authenticatedajax/calendar.php'; ?>
+        <?php include 'config/authenticatedajax/calendar/calendar.php'; ?>
     </div>
     #end
 </div>

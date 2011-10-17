@@ -12,21 +12,21 @@
 
   $auth = Session::getInstance()->getAuthenticationManager()->isAuthenticated();
   if (!$auth) {
-      die();
+      die('Error - 1000');
   }
 
-  // TODO Database Checks
-  $reqobj = Request::getSafeGetOrPost("obj");
-  $action = Request::getSafeGetOrPost("act");
+  $call = Request::getSafeGetOrPost("call");
+  $pkg = Request::getSafeGetOrPost("pkg");
   
-  if($action == 'help') {
-    include ('config/authenticatedajax/help.php');
-  }else if($action == 'home') {
-    include ('config/authenticatedajax/home.php');
-  }else if($action == 'calendar') {
-    include ('config/authenticatedajax/calendar.php');
+  if( $pkg == '' || ctype_alpha($pkg) && ctype_alpha($call)) {
+    if($pkg == '') {
+      include 'config/authenticatedajax/' . $call. '.php';
+    }else {
+      include 'config/authenticatedajax/' . $pkg . '/' . $call. '.php';
+    }
   }else {
-    require ('config/authenticatedajax/' . $reqobj . $action . '.php');
+    die('Error - 2000');
   }
+  
   
 ?>

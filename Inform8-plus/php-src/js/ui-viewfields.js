@@ -142,7 +142,7 @@ function newIntView(theTable, theFieldDefinition, value, object) {
 		$('<a />').attr('href', '#')
 			.text(theobj[fkField])
 			.click(function () {
-				newTab('ajax.php?act=Update&obj=' + theFieldDefinition.foriegnKey.otherTable + '&id=' + value,  title); 
+				newTab('ajax.php?pkg=update&call=' + theFieldDefinition.foriegnKey.otherTable + 'Update&id=' + value,  title); 
 				return false; 
 			})
 			.appendTo(daField);

@@ -76,7 +76,7 @@ class ${table.name}Crud {
     
     if ($res->isPassed()) {
         $res->displayMessage = $this->jacklang->get('Tbl_${table.name}__created') . 
-          Tabs::viewInNewTab('Update', 
+          Tabs::viewInNewTab('update', 
             '${table.name}', 
             $tempobj->get${table.primaryKey.name}(), 
             $this->jacklang->get('viewInNewTab'),

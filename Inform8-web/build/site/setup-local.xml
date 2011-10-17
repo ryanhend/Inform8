@@ -1,0 +1,95 @@
+<project name="LJK - Local Setup" basedir=".">
+
+	<property file="users/${user.name}/local.properties" />
+	
+	<target name="echoMyUsername">
+		<echo message="${user.name}" />
+	</target>
+		
+	<target name="check-config-file-exists">
+	    <available file="users/${user.name}/local.properties" property="config.file.present"/>
+	</target>
+	    	
+	<target name="echo-config-file-exists" if="config.file.present">
+		<echo message="*****************************************************************" />
+		<echo message="IMPORTANT: CONFIG FILE EXISTS ALREADY, COMPLETE CONFIG BY Editing users/${user.name}/local.properties" />
+		<echo message="*****************************************************************" />
+
+	</target>
+
+	<target name="1_setupConfigFiles" description="Creates your local configuration files." 
+		depends="check-config-file-exists, echo-config-file-exists" unless="config.file.present">
+		
+		<echo message="creating config file users/${user.name}/local.properties" />
+		<mkdir dir="users/${user.name}" />
+		<copy file="users/original/local.properties" tofile="users/${user.name}/local.properties" />
+		
+		<echo message="*****************************************************************" />
+		<echo message="IMPORTANT: COMPLETE CONFIG BY Editing users/${user.name}/local.properties" />
+		<echo message="*****************************************************************" />
+	</target>	
+	
+	
+	<target name="2_installLocalDatabase" description="Installs a local database, run after setup is complete">
+
+		<echo message="DROPPING DATABASE" />
+			
+		<sql driver="com.mysql.jdbc.Driver" 
+			url="jdbc:mysql://${localdb.host}:${localdb.port}/${localdb.db}?${localdb.extras}"
+			userid="${localdb.username}" 
+			password="${localdb.password}" 
+			src="setup/sql/local/drop.sql" onerror="continue">
+			<classpath>
+		      <pathelement location="libs/mysql.jar"/>
+		    </classpath>	
+		</sql>
+
+		<echo message="INSTALLING DATABASE" />				
+				
+		<sql driver="com.mysql.jdbc.Driver" 
+			url="jdbc:mysql://${localdb.host}:${localdb.port}/${localdb.db}?${localdb.extras}" 
+			userid="${localdb.username}" 
+			password="${localdb.password}" 
+			src="../piccadilly/current/projects/Piccadilly/config/in.sql"  onerror="continue">
+				<classpath>
+			      <pathelement location="libs/mysql.jar"/>
+			    </classpath>	
+			</sql>
+		
+		<echo message="INSTALLING SAMPLE DATA" />			
+			
+		<sql driver="com.mysql.jdbc.Driver" 
+			url="jdbc:mysql://${localdb.host}:${localdb.port}/${localdb.db}?${localdb.extras}" 
+			userid="${localdb.username}" 
+			password="${localdb.password}" 
+			src="setup/sql/local/sampledata.sql">
+			<classpath>
+		      <pathelement location="libs/mysql.jar"/>
+		    </classpath>	
+		</sql>
+	</target>
+
+
+	<target name="3_setupPHPFiles" description="Creates your db connection files.">
+		<echo message="creating db connection file" />
+		<echo message="Using db connection values in users/${user.name}/local.properties" />
+
+		<copy file="users/original/my.conn.php" tofile="users/${user.name}/my.conn.php" />
+		
+		<replace file="users/${user.name}/my.conn.php" token="ZZZHOSTZZZ" value="${localdb.host}" />
+		<replace file="users/${user.name}/my.conn.php" token="ZZZDBNAMEZZZ" value="${localdb.db}" />
+		<replace file="users/${user.name}/my.conn.php" token="ZZZUSERNAMEZZZ" value="${localdb.username}" />
+		<replace file="users/${user.name}/my.conn.php" token="ZZZPASSWORDZZZ" value="${localdb.password}" />
+
+		<echo message="Configured Local Connection - DB Host: ${localdb.host}" />
+		<echo message="Configured Local Connection - DB Name: ${localdb.db}" />
+		<echo message="Configured Local Connection - UN: ${localdb.username}" />
+		<echo message="Configured Local Connection - PW: ${localdb.password}" />
+
+		<echo message="created db connection file" />
+		
+	</target>	
+
+
+
+</project>

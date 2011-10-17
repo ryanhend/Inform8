@@ -12,10 +12,10 @@
 
 function formatTableLink(cellvalue, options, rowObject) {
 	var daCell = $.parseJSON(cellvalue);
-	return "<a class=\"aunderline\" href=\"#\" " +
-	  "onclick=\"newTab('ajax.php?act=Update&obj=" + daCell.otbl + 
-	  "&id=" + daCell.lval + "', '" + getLanguageEntry('Tbl_' + daCell.otbl) + 
-	  " " + daCell.lval + "'); return false;\">" + daCell.dval + "</a>";
+	return "<div class=\"grid-data\"><a class=\"aunderline\" href=\"#\" " +
+	  "onclick=\"newTab('ajax.php?pkg=update&call=" + daCell.otbl + 
+	  "Update&id=" + daCell.lval + "', '" + getLanguageEntry('Tbl_' + daCell.otbl) + 
+	  " " + daCell.lval + "'); return false;\">" + daCell.dval + "</a></div>";
 }
 
 function formatCell(cellvalue, options, rowObject) {
@@ -42,7 +42,7 @@ function formatCell(cellvalue, options, rowObject) {
 		jqCellVal = daCell.val;
 	}
 	
-	return jqCellVal;
+	return '<div class="grid-data">' + jqCellVal + '</div>';
 }	
 
 
