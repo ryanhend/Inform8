@@ -27,8 +27,8 @@
       <fileset dir="build/eclipse/"></fileset>
     </copy>  	
 
-  	<move file="${dist.folder}/project" todir="${dist.folder}/" tofile=".project"></move>
-  	<move file="${dist.folder}/buildpath" todir="${dist.folder}/" tofile=".buildpath"></move>
+  	<move file="${dist.folder}/project"  tofile="${dist.folder}/.project"></move>
+  	<move file="${dist.folder}/buildpath" tofile="${dist.folder}/.buildpath"></move>
   	
   	<copy todir="${dist.folder}/site/">
       <fileset dir="src"></fileset>

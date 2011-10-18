@@ -1,4 +1,4 @@
-<project name="LJK - Local Setup" basedir=".">
+<project name="Local Setup" basedir=".">
 
 	<property file="users/${user.name}/local.properties" />
 	
