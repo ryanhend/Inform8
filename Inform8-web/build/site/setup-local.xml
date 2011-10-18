@@ -38,7 +38,7 @@
 			url="jdbc:mysql://${localdb.host}:${localdb.port}/${localdb.db}?${localdb.extras}"
 			userid="${localdb.username}" 
 			password="${localdb.password}" 
-			src="setup/sql/local/drop.sql" onerror="continue">
+			src="setup/sql/drop.sql" onerror="continue">
 			<classpath>
 		      <pathelement location="libs/mysql.jar"/>
 		    </classpath>	
@@ -50,7 +50,7 @@
 			url="jdbc:mysql://${localdb.host}:${localdb.port}/${localdb.db}?${localdb.extras}" 
 			userid="${localdb.username}" 
 			password="${localdb.password}" 
-			src="../piccadilly/current/projects/Piccadilly/config/in.sql"  onerror="continue">
+			src="setup/sql/install.sql"  onerror="continue">
 				<classpath>
 			      <pathelement location="libs/mysql.jar"/>
 			    </classpath>	

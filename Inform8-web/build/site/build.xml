@@ -30,7 +30,7 @@
 		
     	<echo message="Deploying Local DB connection file for ${user.name}" />
     	<copy file="users/${user.name}/my.conn.php" 
-			tofile="${local.web.folder}/config/includes/my.conn.1.php" overwrite="true" />
+			tofile="${local.web.folder}/config/includes/db/db.conn.prod.php" overwrite="true" />
     	
     	<echo message="Deployment Complete" />
     </target>
