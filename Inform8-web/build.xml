@@ -18,28 +18,32 @@
     <delete dir="${dist.folder}" />
     <mkdir dir="${dist.folder}" />
 	<mkdir dir="${dist.folder}/site" />
-    <mkdir dir="${dist.folder}/setup" />
     <mkdir dir="${dist.folder}/Inform8" />
   </target>
 
   <target name="build" depends="init">
-    <copy todir="${dist.folder}/site/">
+    
+  	<copy todir="${dist.folder}/">
+      <fileset dir="build/eclipse/"></fileset>
+    </copy>  	
+
+  	<move file="${dist.folder}/project" todir="${dist.folder}/" tofile=".project"></move>
+  	<move file="${dist.folder}/buildpath" todir="${dist.folder}/" tofile=".buildpath"></move>
+  	
+  	<copy todir="${dist.folder}/site/">
       <fileset dir="src"></fileset>
     </copy>
-    <copy todir="${dist.folder}/setup/sql"> 
-      <fileset dir="sql"></fileset>
-    </copy>
-    <copy todir="${dist.folder}/Inform8/templates/Inform8">
+    
+  	<copy todir="${dist.folder}/Inform8/templates/Inform8">
       <fileset dir="templates"></fileset>
     </copy>
-    <copy todir="${dist.folder}/">
-      <fileset dir="build/site"></fileset>
-    </copy>
+    
     <copy todir="${dist.folder}/Inform8/">
       <fileset dir="build/Inform8"></fileset>
-    </copy>  	
-    <copy todir="${dist.folder}/Inform8/config">
-      <fileset dir="config"></fileset>
+    </copy>    
+    
+  	<copy todir="${dist.folder}/build/">
+      <fileset dir="build/site"></fileset>
     </copy>
     
   </target> 
