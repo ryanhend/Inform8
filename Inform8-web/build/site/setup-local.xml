@@ -32,29 +32,17 @@
 	
 	<target name="2_installLocalDatabase" description="Installs a local database, run after setup is complete">
 
-		<echo message="DROPPING DATABASE" />
-			
-		<sql driver="com.mysql.jdbc.Driver" 
-			url="jdbc:mysql://${localdb.host}:${localdb.port}/${localdb.db}?${localdb.extras}"
-			userid="${localdb.username}" 
-			password="${localdb.password}" 
-			src="setup/sql/drop.sql" onerror="continue">
-			<classpath>
-		      <pathelement location="libs/mysql.jar"/>
-		    </classpath>	
-		</sql>
-
 		<echo message="INSTALLING DATABASE" />				
 				
 		<sql driver="com.mysql.jdbc.Driver" 
 			url="jdbc:mysql://${localdb.host}:${localdb.port}/${localdb.db}?${localdb.extras}" 
 			userid="${localdb.username}" 
 			password="${localdb.password}" 
-			src="setup/sql/install.sql"  onerror="continue">
+			src="sql/install.sql"  onerror="continue">
 				<classpath>
 			      <pathelement location="libs/mysql.jar"/>
 			    </classpath>	
-			</sql>
+		</sql>
 		
 		<echo message="INSTALLING SAMPLE DATA" />			
 			
@@ -62,10 +50,10 @@
 			url="jdbc:mysql://${localdb.host}:${localdb.port}/${localdb.db}?${localdb.extras}" 
 			userid="${localdb.username}" 
 			password="${localdb.password}" 
-			src="setup/sql/local/sampledata.sql">
-			<classpath>
-		      <pathelement location="libs/mysql.jar"/>
-		    </classpath>	
+			src="sql/local/data.sql">
+				<classpath>
+			      <pathelement location="libs/mysql.jar"/>
+			    </classpath>	
 		</sql>
 	</target>
 
